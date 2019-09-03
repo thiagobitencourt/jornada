@@ -1,0 +1,22 @@
+.actions {
+    padding: 20px 0;
+}
+
+.record-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+
+    .time-entries {
+        .entry {
+            display: inline-block;
+            margin: 0 5px;
+        }
+    }
+
+    .actions {
+        width: 40px;
+        cursor: pointer;
+    }
+}
