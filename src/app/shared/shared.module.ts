@@ -6,7 +6,10 @@ import {
   MzIconMdiModule,
   MzButtonModule,
   MzTimepickerModule,
-  MzCollectionModule
+  MzCollectionModule,
+  MzModalModule,
+  MzInputModule,
+  MzDatepickerModule
 } from 'ngx-materialize'
 
 @NgModule({
@@ -17,14 +20,20 @@ import {
     MzIconModule,
     MzIconMdiModule,
     MzTimepickerModule,
-    MzCollectionModule
+    MzCollectionModule,
+    MzModalModule,
+    MzInputModule,
+    MzDatepickerModule
   ],
   exports: [
     MzButtonModule,
     MzIconModule,
     MzIconMdiModule,
     MzTimepickerModule,
-    MzCollectionModule
+    MzCollectionModule,
+    MzModalModule,
+    MzInputModule,
+    MzDatepickerModule
   ]
 })
 export class SharedModule { }

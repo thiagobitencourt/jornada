@@ -1,0 +1,39 @@
+<mz-modal [fixedFooter]="true">
+    <mz-modal-header>
+        <h4>Marcar ponto</h4>
+    </mz-modal-header>
+    <mz-modal-content>
+        <form>
+
+            <mz-datepicker-container class="col s12">
+                <i mz-icon-mdi mz-input-prefix icon="calendar"></i>
+                <input mz-datepicker
+                    [options]="datepickerOptions"
+                    label="Data"
+                    id="datepicker"
+                    placeholder="Selecione uma data"
+                    type="text">
+            </mz-datepicker-container>
+
+            <mz-timepicker-container class="col s12">
+                <i mz-icon-mdi mz-input-prefix [icon]="'clock'"></i>
+                <input mz-timepicker
+                    [options]="timepickerOptions"
+                    id="timepicker"
+                    label="Horário"
+                    placeholder="Selecione o horário"
+                    type="text">
+            </mz-timepicker-container>
+
+            <mz-input-container>
+                <i mz-icon-mdi mz-input-prefix icon="pencil"></i>
+                <input mz-input type="text" id="description-input" label="Descricao" length="150">
+            </mz-input-container>
+
+        </form>
+    </mz-modal-content>
+    <mz-modal-footer>
+        <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
+        <button mz-button [flat]="true" (click)="saveRecord()">Marcar</button>
+    </mz-modal-footer>
+</mz-modal>
