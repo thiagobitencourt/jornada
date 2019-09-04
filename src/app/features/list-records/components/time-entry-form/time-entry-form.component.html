@@ -1,10 +1,9 @@
-<mz-modal [fixedFooter]="true">
+<mz-modal [fixedFooter]="true" class="time-entry-modal">
     <mz-modal-header>
-        <h4>Marcar ponto</h4>
+        <h4>Nova marcação</h4>
     </mz-modal-header>
     <mz-modal-content>
-        <form>
-
+        <form class="time-entry-form">
             <mz-datepicker-container class="col s12">
                 <i mz-icon-mdi mz-input-prefix icon="calendar"></i>
                 <input mz-datepicker
@@ -34,6 +33,6 @@
     </mz-modal-content>
     <mz-modal-footer>
         <button mz-button [flat]="true" mz-modal-close>Cancelar</button>
-        <button mz-button [flat]="true" (click)="saveRecord()">Marcar</button>
+        <button mz-button (click)="saveRecord()">Adicionar</button>
     </mz-modal-footer>
 </mz-modal>
