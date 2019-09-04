@@ -3,13 +3,14 @@
         <h4>Nova marcação</h4>
     </mz-modal-header>
     <mz-modal-content>
-        <form class="time-entry-form">
+        <form class="time-entry-form" [formGroup]="timeEntry" (ngSubmit)="saveRecord()" novalidate>
             <mz-datepicker-container class="col s12">
                 <i mz-icon-mdi mz-input-prefix icon="calendar"></i>
                 <input mz-datepicker
                     [options]="datepickerOptions"
-                    label="Data"
                     id="datepicker"
+                    formControlName="date"
+                    label="Data"
                     placeholder="Selecione uma data"
                     type="text">
             </mz-datepicker-container>
@@ -19,6 +20,7 @@
                 <input mz-timepicker
                     [options]="timepickerOptions"
                     id="timepicker"
+                    formControlName="time"
                     label="Horário"
                     placeholder="Selecione o horário"
                     type="text">
@@ -26,9 +28,8 @@
 
             <mz-input-container>
                 <i mz-icon-mdi mz-input-prefix icon="pencil"></i>
-                <input mz-input type="text" id="description-input" label="Descricao" length="150">
+                <input mz-input type="text" id="description-input" formControlName="description" label="Descricao" length="150">
             </mz-input-container>
-
         </form>
     </mz-modal-content>
     <mz-modal-footer>

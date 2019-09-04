@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MzBaseModal } from 'ngx-materialize';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-time-entry-form',
   templateUrl: './time-entry-form.component.html',
   styleUrls: ['./time-entry-form.component.scss']
 })
-export class TimeEntryFormComponent extends MzBaseModal {
+export class TimeEntryFormComponent extends MzBaseModal implements OnInit {
 
   public timepickerOptions: Pickadate.TimeOptions = {
     default: 'now',
@@ -28,12 +29,28 @@ export class TimeEntryFormComponent extends MzBaseModal {
     selectYears: 10
   };
 
-  constructor() {
+  timeEntry: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {
     super();
   }
 
+  ngOnInit() {
+    this.timeEntry = this.formBuilder.group({
+      date: [ new Date(), Validators.required ],
+      time: [ this.getCurrentTime(), Validators.required ],
+      description: []
+    })
+  }
+
   saveRecord() {
-    this.modalComponent.close.emit({ works: true } as any);
+    const record = this.timeEntry.getRawValue();
+    this.modalComponent.close.emit({ record } as any);
     this.modalComponent.closeModal();
+  }
+
+  private getCurrentTime() {
+    const currentTime = new Date();
+    return `${currentTime.getHours()}:${currentTime.getMinutes()}`;
   }
 }

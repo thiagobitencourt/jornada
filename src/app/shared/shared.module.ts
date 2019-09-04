@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 import {
   MzIconModule,
   MzIconMdiModule,
@@ -16,6 +18,8 @@ import {
   declarations: [],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MzButtonModule,
     MzIconModule,
     MzIconMdiModule,
@@ -26,6 +30,8 @@ import {
     MzDatepickerModule
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     MzButtonModule,
     MzIconModule,
     MzIconMdiModule,
