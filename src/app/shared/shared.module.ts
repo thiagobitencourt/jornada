@@ -8,11 +8,11 @@ import {
   MzIconMdiModule,
   MzButtonModule,
   MzTimepickerModule,
-  MzCollectionModule,
   MzModalModule,
   MzInputModule,
-  MzDatepickerModule
-} from 'ngx-materialize'
+  MzDatepickerModule,
+  MzCollapsibleModule
+} from 'ngx-materialize';
 
 @NgModule({
   declarations: [],
@@ -24,10 +24,10 @@ import {
     MzIconModule,
     MzIconMdiModule,
     MzTimepickerModule,
-    MzCollectionModule,
     MzModalModule,
     MzInputModule,
-    MzDatepickerModule
+    MzDatepickerModule,
+    MzCollapsibleModule
   ],
   exports: [
     FormsModule,
@@ -36,10 +36,10 @@ import {
     MzIconModule,
     MzIconMdiModule,
     MzTimepickerModule,
-    MzCollectionModule,
     MzModalModule,
     MzInputModule,
-    MzDatepickerModule
+    MzDatepickerModule,
+    MzCollapsibleModule
   ]
 })
 export class SharedModule { }

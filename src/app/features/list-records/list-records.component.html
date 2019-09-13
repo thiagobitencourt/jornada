@@ -7,34 +7,34 @@
     </section>
 
     <section class="row">
-        <mz-collection>
-            <mz-collection-item>
-                <section class="record-item">
-                    <section>
-                        <div>29/08/2019</div>
-                        <div>Quinta</div>
+        <mz-collapsible [mode]="'expandable'">
+            <mz-collapsible-item [active]="isActive" *ngFor="let jornada of entryTimes">
+                <mz-collapsible-item-header>
+                    <section class="record-item">
+                        <section>
+                            <span>{{ jornada.date | date: 'dd/MM/yyyy' }}</span>
+                        </section>
+                        <section>
+                            <span>{{ jornada.totalWorkDay }}</span>
+                        </section>
                     </section>
-                    <section class="time-entries">
+                </mz-collapsible-item-header>
+                <mz-collapsible-item-body>
+                    <section class="time-entries" *ngFor="let entry of jornada.entries">
                         <div class="entry">
-                            <i mz-icon-mdi icon="arrow-top-right"></i>
-                            <span>07:24</span>
+                            <span>{{ entry.entryType === 'IN' ? 'Entrada: ' : 'Saída: ' }}</span>
+                            <span>{{ entry.time }}</span>
+                            <span class="action">
+                                <i mz-icon-mdi
+                                    [align]="'right'"
+                                    [icon]="'pencil'"
+                                    [size]="'18px'">
+                                </i>
+                            </span>
                         </div>
-                        <div class="entry">
-                            <i mz-icon-mdi icon="arrow-bottom-left"></i>
-                            <span>17:30</span>
-                        </div>
                     </section>
-                    <section>
-                        <span>08:48</span>
-                    </section>
-                    <section class="actions">
-                        <i mz-icon-mdi icon="dots-vertical"></i>
-                        <!-- <button mz-button [flat]="true" [float]="true">
-                            <i mz-icon-mdi icon="dots-vertical"></i>
-                        </button> -->
-                    </section>
-                </section>
-            </mz-collection-item>
-        </mz-collection>
+                </mz-collapsible-item-body>
+            </mz-collapsible-item>
+        </mz-collapsible>
     </section>
 </section>

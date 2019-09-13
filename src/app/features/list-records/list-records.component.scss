@@ -2,21 +2,29 @@
     padding: 20px 0;
 }
 
+mz-collapsible-item-header {
+    width: 100%;
+}
+
 .record-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
+}
 
-    .time-entries {
-        .entry {
-            display: inline-block;
-            margin: 0 5px;
+.time-entries {
+    .entry {
+        padding: 7px 0;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid #CCC;
         }
-    }
 
-    .actions {
-        width: 40px;
-        cursor: pointer;
+        .action {
+            cursor: pointer;
+            float: right;
+            margin-right: 10px;
+        }
     }
 }

@@ -38,8 +38,7 @@ export class TimeEntryFormComponent extends MzBaseModal implements OnInit {
   ngOnInit() {
     this.timeEntry = this.formBuilder.group({
       date: [ new Date(), Validators.required ],
-      time: [ this.getCurrentTime(), Validators.required ],
-      description: []
+      time: [ this.getCurrentTime(), Validators.required ]
     })
   }
 
