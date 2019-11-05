@@ -37,14 +37,15 @@ export class TimeEntryFormComponent extends MzBaseModal implements OnInit {
 
   ngOnInit() {
     this.timeEntry = this.formBuilder.group({
-      date: [ new Date(), Validators.required ],
-      time: [ this.getCurrentTime(), Validators.required ]
+      entryType: ['IN', Validators.required],
+      date: [new Date(), Validators.required],
+      time: [this.getCurrentTime(), Validators.required]
     })
   }
 
   saveRecord() {
     const record = this.timeEntry.getRawValue();
-    this.modalComponent.close.emit({ record } as any);
+    this.modalComponent.close.emit(record);
     this.modalComponent.closeModal();
   }
 

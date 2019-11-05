@@ -11,7 +11,8 @@ import {
   MzModalModule,
   MzInputModule,
   MzDatepickerModule,
-  MzCollapsibleModule
+  MzCollapsibleModule,
+  MzSelectModule
 } from 'ngx-materialize';
 
 @NgModule({
@@ -27,7 +28,8 @@ import {
     MzModalModule,
     MzInputModule,
     MzDatepickerModule,
-    MzCollapsibleModule
+    MzCollapsibleModule,
+    MzSelectModule
   ],
   exports: [
     FormsModule,
@@ -39,7 +41,8 @@ import {
     MzModalModule,
     MzInputModule,
     MzDatepickerModule,
-    MzCollapsibleModule
+    MzCollapsibleModule,
+    MzSelectModule
   ]
 })
 export class SharedModule { }

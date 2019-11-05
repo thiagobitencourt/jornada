@@ -25,7 +25,9 @@ export class ListRecordsComponent implements OnInit {
   createNewRecord() {
     const { instance } = this.modalService.open(TimeEntryFormComponent, {});
     instance.modalComponent.close.subscribe(result => {
-      console.log(result);
+      if (result) {
+        this.addEntryTime(result);
+      }
     });
   }
 
@@ -33,5 +35,15 @@ export class ListRecordsComponent implements OnInit {
     this.listRecordsService.loadRecords().subscribe(records => {
       this.entryTimes = records;
     });
+  }
+
+  private addEntryTime(entryTimeRecord) {
+    const { date, entryType, time } = entryTimeRecord;
+    const jornadaDay = this.entryTimes.find(record => record.date.toISOString() === date.toISOString());
+    if (jornadaDay) {
+      jornadaDay.entries.push({ entryType, time });
+    } else {
+      this.entryTimes.push({ date, entries: [{ entryType, time }] });
+    }
   }
 }
