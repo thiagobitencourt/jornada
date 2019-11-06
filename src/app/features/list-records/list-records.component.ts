@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MzModalService } from 'ngx-materialize';
 import { TimeEntryFormComponent } from './components/time-entry-form/time-entry-form.component';
 import { Jornada } from './model/jornada.model';
 import { ListRecordsService } from './list-records.service';
@@ -14,7 +13,6 @@ export class ListRecordsComponent implements OnInit {
   entryTimes: Jornada[];
 
   constructor(
-    private modalService: MzModalService,
     private listRecordsService: ListRecordsService
   ) { }
 
@@ -23,12 +21,12 @@ export class ListRecordsComponent implements OnInit {
   }
 
   createNewRecord() {
-    const { instance } = this.modalService.open(TimeEntryFormComponent, {});
-    instance.modalComponent.close.subscribe(result => {
-      if (result) {
-        this.addEntryTime(result);
-      }
-    });
+    // const { instance } = this.modalService.open(TimeEntryFormComponent, {});
+    // instance.modalComponent.close.subscribe(result => {
+    //   if (result) {
+    //     this.addEntryTime(result);
+    //   }
+    // });
   }
 
   loadRecords() {

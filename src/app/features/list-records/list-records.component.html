@@ -1,13 +1,11 @@
 <section>
     <section class="row actions">
-        <button mz-button (click)="createNewRecord()">
-            <i mz-icon-mdi [align]="'left'" icon="plus"></i>
-            <span>Adicionar</span>
-        </button>
+        <button mat-raised-button color="primary" (click)="createNewRecord()">Adicionar</button>
+        <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
     </section>
 
     <section class="row">
-        <mz-collapsible [mode]="'expandable'">
+        <!-- <mz-collapsible [mode]="'expandable'">
             <mz-collapsible-item [active]="isActive" *ngFor="let jornada of entryTimes">
                 <mz-collapsible-item-header>
                     <section class="record-item">
@@ -35,6 +33,6 @@
                     </section>
                 </mz-collapsible-item-body>
             </mz-collapsible-item>
-        </mz-collapsible>
+        </mz-collapsible> -->
     </section>
 </section>
