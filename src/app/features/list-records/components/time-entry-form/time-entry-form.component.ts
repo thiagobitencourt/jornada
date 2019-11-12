@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MzBaseModal } from 'ngx-materialize';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,32 +6,31 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './time-entry-form.component.html',
   styleUrls: ['./time-entry-form.component.scss']
 })
-export class TimeEntryFormComponent extends MzBaseModal implements OnInit {
+export class TimeEntryFormComponent implements OnInit {
 
-  public timepickerOptions: Pickadate.TimeOptions = {
-    default: 'now',
-    twelvehour: false,
-    donetext: 'OK',
-    cleartext: 'Limpar',
-    canceltext: 'Cancelar'
-  };
+  // public timepickerOptions: Pickadate.TimeOptions = {
+  //   default: 'now',
+  //   twelvehour: false,
+  //   donetext: 'OK',
+  //   cleartext: 'Limpar',
+  //   canceltext: 'Cancelar'
+  // };
 
-  public datepickerOptions: Pickadate.DateOptions = {
-    clear: 'Limpar',
-    close: 'OK',
-    today: 'Hoje',
-    closeOnClear: true,
-    closeOnSelect: false,
-    format: 'dd/mm/yyyy',
-    formatSubmit: 'yyyy-mm-dd',
-    selectMonths: true,
-    selectYears: 10
-  };
+  // public datepickerOptions: Pickadate.DateOptions = {
+  //   clear: 'Limpar',
+  //   close: 'OK',
+  //   today: 'Hoje',
+  //   closeOnClear: true,
+  //   closeOnSelect: false,
+  //   format: 'dd/mm/yyyy',
+  //   formatSubmit: 'yyyy-mm-dd',
+  //   selectMonths: true,
+  //   selectYears: 10
+  // };
 
   timeEntry: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
-    super();
   }
 
   ngOnInit() {
@@ -45,8 +43,8 @@ export class TimeEntryFormComponent extends MzBaseModal implements OnInit {
 
   saveRecord() {
     const record = this.timeEntry.getRawValue();
-    this.modalComponent.close.emit(record);
-    this.modalComponent.closeModal();
+    // this.modalComponent.close.emit(record);
+    // this.modalComponent.closeModal();
   }
 
   private getCurrentTime() {
