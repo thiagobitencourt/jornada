@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Jornada } from './model/jornada.model';
-import { ListRecordsService } from './list-records.service';
+import { JornadaService } from 'src/app/shared/jornada.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-records',
@@ -9,38 +9,20 @@ import { ListRecordsService } from './list-records.service';
 })
 export class ListRecordsComponent implements OnInit {
 
-  entryTimes: Jornada[];
+  entryTimes: any[] = [];
 
   constructor(
-    private listRecordsService: ListRecordsService
+    private jornadaService: JornadaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.loadRecords();
-  }
-
-  createNewRecord() {
-    // const { instance } = this.modalService.open(TimeEntryFormComponent, {});
-    // instance.modalComponent.close.subscribe(result => {
-    //   if (result) {
-    //     this.addEntryTime(result);
-    //   }
-    // });
-  }
-
-  loadRecords() {
-    this.listRecordsService.loadRecords().subscribe(records => {
-      this.entryTimes = records;
+    this.jornadaService.listEntrytimes().subscribe(entryTimes => {
+      this.entryTimes = entryTimes;
     });
   }
-
-  private addEntryTime(entryTimeRecord) {
-    const { date, entryType, time } = entryTimeRecord;
-    const jornadaDay = this.entryTimes.find(record => record.date.toISOString() === date.toISOString());
-    if (jornadaDay) {
-      jornadaDay.entries.push({ entryType, time });
-    } else {
-      this.entryTimes.push({ date, entries: [{ entryType, time }] });
-    }
+  
+  addNewTimeRegister() {
+    this.router.navigate(['time-register']);
   }
 }

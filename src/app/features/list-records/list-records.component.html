@@ -1,38 +1,11 @@
 <section>
     <section class="row actions">
-        <button mat-raised-button color="primary" (click)="createNewRecord()">Adicionar</button>
-        <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+        <button mat-raised-button color="primary" (click)="addNewTimeRegister()">Adicionar</button>
     </section>
 
     <section class="row">
-        <!-- <mz-collapsible [mode]="'expandable'">
-            <mz-collapsible-item [active]="isActive" *ngFor="let jornada of entryTimes">
-                <mz-collapsible-item-header>
-                    <section class="record-item">
-                        <section>
-                            <span>{{ jornada.date | date: 'dd/MM/yyyy' }}</span>
-                        </section>
-                        <section>
-                            <span>{{ jornada.totalWorkDay }}</span>
-                        </section>
-                    </section>
-                </mz-collapsible-item-header>
-                <mz-collapsible-item-body>
-                    <section class="time-entries" *ngFor="let entry of jornada.entries">
-                        <div class="entry">
-                            <span>{{ entry.entryType === 'IN' ? 'Entrada: ' : 'Saída: ' }}</span>
-                            <span>{{ entry.time }}</span>
-                            <span class="action">
-                                <i mz-icon-mdi
-                                    [align]="'right'"
-                                    [icon]="'pencil'"
-                                    [size]="'18px'">
-                                </i>
-                            </span>
-                        </div>
-                    </section>
-                </mz-collapsible-item-body>
-            </mz-collapsible-item>
-        </mz-collapsible> -->
+        <ul>
+            <li *ngFor="let record of entryTimes">{{ record | date: 'dd/MM/yyyy HH:mm'}}</li>
+        </ul>
     </section>
 </section>
