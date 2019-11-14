@@ -1,11 +1,11 @@
 <section>
     <section class="row actions">
-        <button mat-raised-button color="primary" (click)="addNewTimeRegister()">Adicionar</button>
+        <button mat-raised-button color="primary" (click)="addNewRecord()">Adicionar</button>
     </section>
 
     <section class="row">
         <ul>
-            <li *ngFor="let record of entryTimes">{{ record | date: 'dd/MM/yyyy HH:mm'}}</li>
+            <li *ngFor="let workday of workdays">{{ workday.date | date: 'dd/MM/yyyy HH:mm'}}</li>
         </ul>
     </section>
 </section>

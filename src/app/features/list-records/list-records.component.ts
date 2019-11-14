@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { JornadaService } from 'src/app/shared/jornada.service';
 import { Router } from '@angular/router';
+import { WorkdayService } from 'src/app/shared/services/workday.service';
+import { Workday } from 'src/app/shared/model/workday.model';
 
 @Component({
   selector: 'app-list-records',
@@ -8,21 +9,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-records.component.scss']
 })
 export class ListRecordsComponent implements OnInit {
-
-  entryTimes: any[] = [];
+  workdays: Workday[] = [];
 
   constructor(
-    private jornadaService: JornadaService,
+    private workdayService: WorkdayService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.jornadaService.listEntrytimes().subscribe(entryTimes => {
-      this.entryTimes = entryTimes;
-    });
+    this.workdayService.listWorkdays()
+      .subscribe((workdays: Workday[]) => {
+        this.workdays = workdays;
+      });
   }
   
-  addNewTimeRegister() {
-    this.router.navigate(['time-register']);
+  addNewRecord() {
+    this.router.navigate(['register']);
   }
 }

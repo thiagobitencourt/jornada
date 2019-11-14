@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JornadaService } from './jornada.service';
+import { WorkdayService } from './workday.service';
 
-describe('JornadaService', () => {
+describe('WorkdayService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: JornadaService = TestBed.get(JornadaService);
+    const service: WorkdayService = TestBed.get(WorkdayService);
     expect(service).toBeTruthy();
   });
 });

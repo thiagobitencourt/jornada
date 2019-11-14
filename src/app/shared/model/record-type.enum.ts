@@ -1,4 +1,4 @@
-export enum EntryTimeType {
+export enum RecordType {
     IN = 'IN',
     OUT = 'OUT'
 }

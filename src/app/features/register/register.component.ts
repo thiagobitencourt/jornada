@@ -1,42 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { JornadaService } from 'src/app/shared/jornada.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { WorkdayService } from 'src/app/shared/services/workday.service';
+import { WorkdayRecord } from 'src/app/shared/model/workday-record.model';
+import { RecordType } from 'src/app/shared/model/record-type.enum';
 
 @Component({
-  selector: 'app-time-register',
-  templateUrl: './time-register.component.html',
-  styleUrls: ['./time-register.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class TimeRegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   currenteDatetime: Date = new Date();
   saving = false;
-  records = [];
 
   constructor(
     private router: Router,
-    private jornadaService: JornadaService
+    private workdayService: WorkdayService
   ) {
     this.initClock();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   register(datetime) {
     this.saving = true;
-    this.jornadaService
-      .addEntrytime(datetime)
+    this.workdayService
+      .addWorkdayRecord(
+        {
+          datetime,
+          recordType: RecordType.IN
+        } as WorkdayRecord
+      )
       .pipe(finalize(() => {
         this.saving = false;
       }))
       .subscribe(() => {
         this.router.navigate(['list']);
       });
-  }
-
-  removeRegister(recordIndex) {
-    this.records.splice(recordIndex, 1);
   }
 
   private initClock() {

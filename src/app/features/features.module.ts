@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListRecordsModule } from './list-records/list-records.module';
-import { TimeRegisterComponent } from './time-register/time-register.component';
+import { RegisterComponent } from './register/register.component';
 import { FeaturesRoutingModule } from './features-routing.modules';
 import { SharedModule } from '../shared/shared.module';
+import { ListRecordsComponent } from './list-records/list-records.component';
 
 @NgModule({
-  declarations: [TimeRegisterComponent],
+  declarations: [ListRecordsComponent, RegisterComponent],
   imports: [
     CommonModule,
     SharedModule,
-    FeaturesRoutingModule,
-    ListRecordsModule
+    FeaturesRoutingModule
   ]
 })
 export class FeaturesModule {}
