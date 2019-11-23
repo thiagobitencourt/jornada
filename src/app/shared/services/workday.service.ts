@@ -15,11 +15,28 @@ export class WorkdayService {
   }
 
   addWorkdayRecord(record: WorkdayRecord): Observable<void> {
-    this.workdayRecords.push({ date: record.datetime, records: [record] } as Workday);
+    const workday = this.findWorkdayRecord(record.datetime);
+    if (workday) {
+      workday.records.push(record);
+    } else {
+      this.workdayRecords.push({ date: record.datetime, records: [record] } as Workday);
+    }
     return of(null);
   }
 
   listWorkdays(): Observable<Workday[]> {
     return of(this.workdayRecords);
+  }
+
+  private findWorkdayRecord(date: Date) {
+    const dateString = this.getDateString(date);
+    return this.workdayRecords.find((workday: Workday) => {
+      const currentWorkDayDateString = this.getDateString(workday.date);
+      return currentWorkDayDateString === dateString;
+    });
+  }
+
+  private getDateString(date: Date) {
+    return `${date.getDay()}/${date.getDate()}/${date.getFullYear()}`;
   }
 }
