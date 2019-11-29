@@ -5,7 +5,7 @@
 
     <section class="row">
         <div *ngFor="let workday of workdays">
-            <span>{{ workday.date | date: 'dd/MM/yyyy'}}</span>
+            <span>{{ workday.date | date: 'dd/MM/yyyy'}} --> {{ workday.totalWorkday }}</span>
             <ul>
                 <li *ngFor="let record of workday.records">{{ record.datetime | date: 'HH:mm'}}</li>
             </ul>

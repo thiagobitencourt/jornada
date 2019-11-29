@@ -11,6 +11,7 @@ import { RecordType } from 'src/app/shared/model/record-type.enum';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  lastWorkdayRecord: WorkdayRecord;
   currenteDatetime: Date = new Date();
   saving = false;
 
@@ -21,15 +22,20 @@ export class RegisterComponent implements OnInit {
     this.initClock();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.lastWorkdayRecord = this.workdayService.getLastRecord();
+  }
 
   register(datetime) {
     this.saving = true;
+    const recordType = this.lastWorkdayRecord.recordType === RecordType.IN
+      ? RecordType.OUT
+      : RecordType.IN; 
     this.workdayService
       .addWorkdayRecord(
         {
           datetime,
-          recordType: RecordType.IN
+          recordType
         } as WorkdayRecord
       )
       .pipe(finalize(() => {
