@@ -1,0 +1,16 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+
+    .logo-icon {
+        width: 32px;
+        height: auto;
+    }
+
+    .user-icon {
+        width: 42px;
+        height: auto;
+        border-radius: 50%;
+    }
+}
