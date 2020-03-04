@@ -1,12 +1,53 @@
-<section>
+<form [formGroup]="timeRecordForm">
     <div>
-        <span>{{ currenteDatetime | date: 'dd/MM/yyyy' }}</span>
+        <span>{{ datetimeControl.value | date: 'dd/MM/yyyy' }}</span>
+        <div>
+            <button mat-flat-button *ngIf="!isCustomDatetime || todaySelected">Ontem</button>
+            <button mat-flat-button *ngIf="isCustomDatetime && !todaySelected">Hoje</button>
+            |
+            <mat-form-field style="width: 0">
+                <input matInput [matDatepicker]="picker" (dateChange)="customDatetimeSelected()" formControlName="datetime">
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button mat-flat-button (click)="picker.open()">
+                Alterar
+            </button>
+        </div>
     </div>
     <div>
-        <span>{{ currenteDatetime | date: 'HH:mm:ss' }}</span>
+        <span>{{ datetimeControl.value | date: 'HH:mm:ss' }}</span>
     </div>
 
-    <button mat-stroked-button class="check-button" [disabled]="saving" (click)="register(currenteDatetime)">
-        <i class="material-icons md-18">fingerprint</i>
+    <div>
+        <mat-button-toggle-group [value]="recordTypeControl.value" (change)="recordTypeChanged($event)">
+            <mat-button-toggle [value]="RecordType.IN">
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Entrada</span>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="RecordType.OUT">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Saída</span>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <div>
+        <mat-form-field>
+            <mat-label>Observação</mat-label>
+            <textarea matInput placeholder="Adicione um comentário a esta marcação..." formControlName="message"></textarea>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <span *ngIf="lastWorkdayRecord && lastWorkdayRecord.datetime">
+            Última marcação
+                {{ lastWorkdayRecord.datetime | date: 'dd/MM/yyyy' }} às
+                {{ lastWorkdayRecord.datetime | date: 'HH:mm' }}
+        </span>
+    </div>
+
+    <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving" (click)="register()">
+        <i class="material-icons md-18"></i>
+        <span>Marcar ponto</span>
     </button>
-</section>
+</form>

@@ -3,7 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSliderModule } from '@angular/material/slider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [],
@@ -11,14 +15,22 @@ import { MatSliderModule } from '@angular/material/slider';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatSliderModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatIconModule,
     MatButtonModule
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
-    MatSliderModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatIconModule
   ]
