@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   isCustomDatetime = false;
   todaySelected = true;
   saving = false;
+  changingTime = false;
 
   timeRecordForm: FormGroup;
   datetimeControl: AbstractControl;
@@ -74,6 +75,18 @@ export class RegisterComponent implements OnInit {
 
   recordTypeChanged({ value }) {
     this.recordTypeControl.setValue(value);
+  }
+
+  setTimeValue({ hour, minute }) {
+    this.changingTime = false;
+    clearInterval(this.interval);
+    this.isCustomDatetime = true;
+
+    const currentDatetime = new Date(this.datetimeControl.value);
+    currentDatetime.setHours(hour);
+    currentDatetime.setMinutes(minute);
+    currentDatetime.setSeconds(0);
+    this.datetimeControl.setValue(currentDatetime);
   }
 
   private isTodaySelected() {

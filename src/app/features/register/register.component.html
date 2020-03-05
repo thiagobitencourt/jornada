@@ -15,7 +15,13 @@
         </div>
     </div>
     <div>
-        <span>{{ datetimeControl.value | date: 'HH:mm:ss' }}</span>
+        <span *ngIf="!changingTime">{{ datetimeControl.value | date: 'HH:mm:ss' }}</span>
+        <button *ngIf="!changingTime" mat-flat-button (click)="changingTime = true">
+            Alterar
+        </button>
+        <div *ngIf="changingTime">
+            <app-time-picker [currenteDatetime]="datetimeControl.value" (updateValue)="setTimeValue($event)"></app-time-picker>
+        </div>
     </div>
 
     <div>
