@@ -1,0 +1,26 @@
+<mat-form-field>
+    <mat-label>Hora</mat-label>
+    <mat-select [formControl]="selectedHour">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+            {{ hour }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Minuto</mat-label>
+    <mat-select [formControl]="selectedMinute">
+        <mat-option *ngFor="let minute of minutes" [value]="minute">
+          {{ minute }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<div>
+    <button mat-icon-button color="primary" (click)=save()>
+        <i class="fas fa-check"></i>
+    </button>
+    <button mat-icon-button color="primary" (click)=cancel()>
+        <i class="fas fa-times"></i>
+    </button>
+</div>

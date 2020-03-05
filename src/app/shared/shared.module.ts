@@ -8,9 +8,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { TimePickerComponent } from './components/time-picker/time-picker.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [TimePickerComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,7 +23,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
   ],
   exports: [
     FormsModule,
@@ -32,7 +35,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    TimePickerComponent
   ]
 })
 export class SharedModule { }
