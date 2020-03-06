@@ -1,10 +1,9 @@
-.check-button {
-    color: green;
-    border-radius: 50%;
-    height: 6em;
-    border: none;
+.dialog-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 10px;
 
-    .material-icons {
-        font-size: 4em;
+    .fas {
+        font-size: 20px;
     }
 }

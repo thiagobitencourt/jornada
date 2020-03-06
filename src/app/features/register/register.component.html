@@ -1,59 +1,69 @@
+<h1 mat-dialog-title class="dialog-header">
+    <span>Adicionar marcação</span>
+    <button mat-icon-button (click)="closeDialog()" tabindex="-1">
+        <i class="fas fa-times"></i>
+    </button>
+</h1>
 <form [formGroup]="timeRecordForm">
-    <div>
-        <span>{{ datetimeControl.value | date: 'dd/MM/yyyy' }}</span>
+    <div mat-dialog-content>
         <div>
-            <button mat-flat-button *ngIf="!isCustomDatetime || todaySelected">Ontem</button>
-            <button mat-flat-button *ngIf="isCustomDatetime && !todaySelected">Hoje</button>
-            |
-            <mat-form-field style="width: 0">
-                <input matInput [matDatepicker]="picker" (dateChange)="customDatetimeSelected()" formControlName="datetime">
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <button mat-flat-button (click)="picker.open()">
+            <span>{{ datetimeControl.value | date: 'dd/MM/yyyy' }}</span>
+            <div>
+                <button mat-flat-button *ngIf="!isCustomDatetime || todaySelected">Ontem</button>
+                <button mat-flat-button *ngIf="isCustomDatetime && !todaySelected">Hoje</button>
+                |
+                <mat-form-field style="width: 0">
+                    <input matInput [matDatepicker]="picker" (dateChange)="customDatetimeSelected()" formControlName="datetime">
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <button mat-flat-button (click)="picker.open()">
+                    Alterar
+                </button>
+            </div>
+        </div>
+        <div>
+            <span *ngIf="!changingTime">{{ datetimeControl.value | date: 'HH:mm:ss' }}</span>
+            <button *ngIf="!changingTime" mat-flat-button (click)="changingTime = true">
                 Alterar
             </button>
+            <div *ngIf="changingTime">
+                <app-time-picker [currenteDatetime]="datetimeControl.value" (updateValue)="setTimeValue($event)"></app-time-picker>
+            </div>
+        </div>
+
+        <div>
+            <mat-button-toggle-group [value]="recordTypeControl.value" (change)="recordTypeChanged($event)">
+                <mat-button-toggle [value]="RecordType.IN">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Entrada</span>
+                </mat-button-toggle>
+                <mat-button-toggle [value]="RecordType.OUT">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Saída</span>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <mat-label>Observação</mat-label>
+                <textarea matInput placeholder="Adicione um comentário a esta marcação..." formControlName="message"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <span *ngIf="lastWorkdayRecord && lastWorkdayRecord.datetime">
+                Última marcação
+                    {{ lastWorkdayRecord.datetime | date: 'dd/MM/yyyy' }} às
+                    {{ lastWorkdayRecord.datetime | date: 'HH:mm' }}
+            </span>
         </div>
     </div>
-    <div>
-        <span *ngIf="!changingTime">{{ datetimeControl.value | date: 'HH:mm:ss' }}</span>
-        <button *ngIf="!changingTime" mat-flat-button (click)="changingTime = true">
-            Alterar
+    <div mat-dialog-actions>
+        <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving" (click)="register()">
+            <i class="material-icons md-18"></i>
+            <span>Marcar ponto</span>
         </button>
-        <div *ngIf="changingTime">
-            <app-time-picker [currenteDatetime]="datetimeControl.value" (updateValue)="setTimeValue($event)"></app-time-picker>
-        </div>
+        <button mat-flat-button (click)="closeDialog()">Cancelar</button>
     </div>
-
-    <div>
-        <mat-button-toggle-group [value]="recordTypeControl.value" (change)="recordTypeChanged($event)">
-            <mat-button-toggle [value]="RecordType.IN">
-                <i class="fas fa-sign-in-alt"></i>
-                <span>Entrada</span>
-            </mat-button-toggle>
-            <mat-button-toggle [value]="RecordType.OUT">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Saída</span>
-            </mat-button-toggle>
-        </mat-button-toggle-group>
-    </div>
-
-    <div>
-        <mat-form-field>
-            <mat-label>Observação</mat-label>
-            <textarea matInput placeholder="Adicione um comentário a esta marcação..." formControlName="message"></textarea>
-        </mat-form-field>
-    </div>
-
-    <div>
-        <span *ngIf="lastWorkdayRecord && lastWorkdayRecord.datetime">
-            Última marcação
-                {{ lastWorkdayRecord.datetime | date: 'dd/MM/yyyy' }} às
-                {{ lastWorkdayRecord.datetime | date: 'HH:mm' }}
-        </span>
-    </div>
-
-    <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving" (click)="register()">
-        <i class="material-icons md-18"></i>
-        <span>Marcar ponto</span>
-    </button>
 </form>

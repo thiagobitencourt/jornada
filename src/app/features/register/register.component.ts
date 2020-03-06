@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { WorkdayService } from 'src/app/shared/services/workday.service';
 import { WorkdayRecord } from 'src/app/shared/model/workday-record.model';
 import { RecordType } from 'src/app/shared/model/record-type.enum';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -26,9 +26,10 @@ export class RegisterComponent implements OnInit {
   interval: any;
 
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
-    private workdayService: WorkdayService
+    private workdayService: WorkdayService,
+    public dialogRef: MatDialogRef<RegisterComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.initClock();
   }
@@ -62,7 +63,7 @@ export class RegisterComponent implements OnInit {
         this.saving = false;
       }))
       .subscribe(() => {
-        this.router.navigate(['list']);
+        this.closeDialog();
       });
   }
 
@@ -77,16 +78,24 @@ export class RegisterComponent implements OnInit {
     this.recordTypeControl.setValue(value);
   }
 
-  setTimeValue({ hour, minute }) {
+  setTimeValue(time) {
     this.changingTime = false;
-    clearInterval(this.interval);
-    this.isCustomDatetime = true;
 
-    const currentDatetime = new Date(this.datetimeControl.value);
-    currentDatetime.setHours(hour);
-    currentDatetime.setMinutes(minute);
-    currentDatetime.setSeconds(0);
-    this.datetimeControl.setValue(currentDatetime);
+    if (time) {
+      const { hour, minute } = time;
+      clearInterval(this.interval);
+      this.isCustomDatetime = true;
+  
+      const currentDatetime = new Date(this.datetimeControl.value);
+      currentDatetime.setHours(hour);
+      currentDatetime.setMinutes(minute);
+      currentDatetime.setSeconds(0);
+      this.datetimeControl.setValue(currentDatetime);
+    }
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 
   private isTodaySelected() {

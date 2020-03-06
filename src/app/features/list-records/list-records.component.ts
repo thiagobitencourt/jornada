@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { WorkdayService } from 'src/app/shared/services/workday.service';
 import { Workday } from 'src/app/shared/model/workday.model';
+import { MatDialog } from '@angular/material/dialog';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-list-records',
@@ -13,8 +14,8 @@ export class ListRecordsComponent implements OnInit {
 
   constructor(
     private workdayService: WorkdayService,
-    private router: Router
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.workdayService.listWorkdays()
@@ -24,6 +25,8 @@ export class ListRecordsComponent implements OnInit {
   }
   
   addNewRecord() {
-    this.router.navigate(['register']);
+    this.dialog.open(RegisterComponent, {
+      width: '60vw'
+    }).afterClosed().subscribe(() => {});
   }
 }
