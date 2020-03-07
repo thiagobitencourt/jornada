@@ -44,6 +44,7 @@ export class RegisterComponent implements OnInit {
     this.datetimeControl = this.timeRecordForm.controls.datetime;
     this.recordTypeControl = this.timeRecordForm.controls.recordType;
     this.lastWorkdayRecord = this.workdayService.getLastRecord();
+    this.recordTypeControl.setValue(this.lastWorkdayRecord.recordType === RecordType.IN ? RecordType.OUT : RecordType.IN); 
   }
 
   register() {
