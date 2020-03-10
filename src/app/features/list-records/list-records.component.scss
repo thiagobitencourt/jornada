@@ -1,5 +1,7 @@
 .actions {
-    padding: 20px 0;
+    padding-bottom: 15px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
 }
 
 .workday-summary {
