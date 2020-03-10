@@ -48,8 +48,9 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const datetime = this.timeRecordForm.get('datetime').value;
     this.saving = true;
+    const message = this.timeRecordForm.get('message').value;
+    const datetime = this.timeRecordForm.get('datetime').value;
     const recordType = this.lastWorkdayRecord.recordType === RecordType.IN
       ? RecordType.OUT
       : RecordType.IN; 
@@ -57,7 +58,8 @@ export class RegisterComponent implements OnInit {
       .addWorkdayRecord(
         {
           datetime,
-          recordType
+          recordType,
+          message
         } as WorkdayRecord
       )
       .pipe(finalize(() => {

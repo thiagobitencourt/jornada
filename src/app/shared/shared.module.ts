@@ -11,6 +11,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { TimePickerComponent } from './components/time-picker/time-picker.compon
     MatNativeDateModule,
     MatIconModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   exports: [
     FormsModule,
@@ -43,6 +45,7 @@ import { TimePickerComponent } from './components/time-picker/time-picker.compon
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
+    MatTooltipModule,
     TimePickerComponent
   ]
 })

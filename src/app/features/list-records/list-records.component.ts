@@ -3,6 +3,7 @@ import { WorkdayService } from 'src/app/shared/services/workday.service';
 import { Workday } from 'src/app/shared/model/workday.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
+import { RecordType } from 'src/app/shared/model/record-type.enum';
 
 @Component({
   selector: 'app-list-records',
@@ -10,6 +11,7 @@ import { RegisterComponent } from '../register/register.component';
   styleUrls: ['./list-records.component.scss']
 })
 export class ListRecordsComponent implements OnInit {
+  RecordType = RecordType;
   workdays: Workday[] = [];
 
   constructor(
