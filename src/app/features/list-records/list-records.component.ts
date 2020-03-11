@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkdayService } from 'src/app/shared/services/workday.service';
-import { Workday } from 'src/app/shared/model/workday.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
-import { RecordType } from 'src/app/shared/model/record-type.enum';
+import { RecordType } from 'src/app/core/model/record-type.enum';
+import { Workday } from 'src/app/core/model/workday.model';
+import { WorkdayService } from 'src/app/core/services/workday.service';
 
 @Component({
   selector: 'app-list-records',

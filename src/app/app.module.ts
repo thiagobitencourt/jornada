@@ -5,23 +5,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FeaturesModule } from './features/features.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './components/header/header.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import localePt from '@angular/common/locales/pt';
 import localePtExtra from '@angular/common/locales/extra/pt';
 import { registerLocaleData } from '@angular/common';
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 registerLocaleData(localePt, 'pt', localePtExtra);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
-    FeaturesModule,
-    BrowserAnimationsModule
+    CoreModule,
+    SharedModule,
+    FeaturesModule
   ],
   providers: [
     {
@@ -31,4 +31,4 @@ registerLocaleData(localePt, 'pt', localePtExtra);
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { WorkdayService } from 'src/app/shared/services/workday.service';
-import { WorkdayRecord } from 'src/app/shared/model/workday-record.model';
-import { RecordType } from 'src/app/shared/model/record-type.enum';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RecordType } from 'src/app/core/model/record-type.enum';
+import { WorkdayRecord } from 'src/app/core/model/workday-record.model';
+import { WorkdayService } from 'src/app/core/services/workday.service';
 
 @Component({
   selector: 'app-register',

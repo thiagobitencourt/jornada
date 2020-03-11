@@ -4,9 +4,10 @@ import { RegisterComponent } from './register/register.component';
 import { FeaturesRoutingModule } from './features-routing.modules';
 import { SharedModule } from '../shared/shared.module';
 import { ListRecordsComponent } from './list-records/list-records.component';
+import { TimePickerComponent } from './register/time-picker/time-picker.component';
 
 @NgModule({
-  declarations: [ListRecordsComponent, RegisterComponent],
+  declarations: [ListRecordsComponent, RegisterComponent, TimePickerComponent],
   imports: [
     CommonModule,
     SharedModule,
