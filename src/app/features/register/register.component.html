@@ -34,12 +34,16 @@
         <div>
             <mat-button-toggle-group [value]="recordTypeControl.value" (change)="recordTypeChanged($event)">
                 <mat-button-toggle [value]="RecordType.IN">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>Entrada</span>
+                    <span class="iconed-label">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Entrada</span>
+                    </span>
                 </mat-button-toggle>
-                <mat-button-toggle [value]="RecordType.OUT">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Saída</span>
+                <mat-button-toggle [value]="RecordType.OUT" class="iconed-label">
+                    <span class="iconed-label">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Saída</span>
+                    </span>
                 </mat-button-toggle>
             </mat-button-toggle-group>
         </div>

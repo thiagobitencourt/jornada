@@ -1,14 +1,14 @@
 <ul class="records-list">
     <li *ngFor="let record of records" class="workday-record">
-        <div *ngIf="record.recordType === RecordType.IN">
+        <div *ngIf="record.recordType === RecordType.IN" class="iconed-label">
             <span><i class="fas fa-sign-in-alt"></i></span>
             <span>Entrada às {{ record.datetime | date: 'HH:mm'}}</span>
         </div>
-        <div *ngIf="record.recordType === RecordType.OUT">
+        <div *ngIf="record.recordType === RecordType.OUT" class="iconed-label">
             <span><i class="fas fa-sign-out-alt"></i></span>
             <span>Saída às {{ record.datetime | date: 'HH:mm'}}</span>
         </div>
-        <div>
+        <div class="iconed-label">
             <span><i class="fas fa-comment-alt"></i></span>
             <span>{{ record.message }}</span>
         </div>
