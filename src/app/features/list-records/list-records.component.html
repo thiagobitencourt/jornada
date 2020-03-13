@@ -1,39 +1,4 @@
 <section>
     <app-action-bar style="margin-bottom: 15px"></app-action-bar>
-    <mat-accordion>
-        <mat-expansion-panel *ngFor="let workday of workdays">
-            <mat-expansion-panel-header>
-                <mat-panel-title class="workday-summary">
-                    <div>{{ workday.date | date: 'dd/MM/yyyy' }}</div>
-                    <div>{{ workday.totalWorkday }}</div>
-                    <div>{{ workday.overtime?.total }} - {{ workday.overtime?.usedAs }}</div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-        
-            <ul>
-                <li *ngFor="let record of workday.records" class="workday-record">
-                    <div *ngIf="record.recordType === RecordType.IN">
-                        <span><i class="fas fa-sign-in-alt"></i></span>
-                        <span>Entrada às {{ record.datetime | date: 'HH:mm'}}</span>
-                    </div>
-                    <div *ngIf="record.recordType === RecordType.OUT">
-                        <span><i class="fas fa-sign-out-alt"></i></span>
-                        <span>Saída às {{ record.datetime | date: 'HH:mm'}}</span>
-                    </div>
-                    <div>
-                        <span><i class="fas fa-comment-alt"></i></span>
-                        <span>{{ record.message }}</span>
-                    </div>
-                    <div>
-                        <button mat-icon-button matTooltip="Editar">
-                            <i class="fas fa-pen"></i>
-                        </button>
-                        <button mat-icon-button matTooltip="Remover">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </li>
-            </ul>
-        </mat-expansion-panel>
-    </mat-accordion>
+    <app-workday-list [workdays]="workdays | async"></app-workday-list>
 </section>

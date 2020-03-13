@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RecordType } from 'src/app/core/model/record-type.enum';
 import { Workday } from 'src/app/core/model/workday.model';
 import { WorkdayService } from 'src/app/core/services/workday.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list-records',
@@ -9,15 +9,10 @@ import { WorkdayService } from 'src/app/core/services/workday.service';
   styleUrls: ['./list-records.component.scss']
 })
 export class ListRecordsComponent implements OnInit {
-  RecordType = RecordType;
-  workdays: Workday[] = [];
+  workdays: Observable<Workday[]>;
 
   constructor(private workdayService: WorkdayService) {}
-
   ngOnInit() {
-    this.workdayService.listWorkdays()
-      .subscribe((workdays: Workday[]) => {
-        this.workdays = workdays;
-      });
+    this.workdays = this.workdayService.listWorkdays();
   }
 }

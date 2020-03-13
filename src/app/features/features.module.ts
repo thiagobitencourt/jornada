@@ -6,9 +6,10 @@ import { SharedModule } from '../shared/shared.module';
 import { ListRecordsComponent } from './list-records/list-records.component';
 import { TimePickerComponent } from './register/time-picker/time-picker.component';
 import { ActionBarComponent } from './list-records/action-bar/action-bar.component';
+import { WorkdayListComponent } from './list-records/workday-list/workday-list.component';
 
 @NgModule({
-  declarations: [ListRecordsComponent, RegisterComponent, TimePickerComponent, ActionBarComponent],
+  declarations: [ListRecordsComponent, RegisterComponent, TimePickerComponent, ActionBarComponent, WorkdayListComponent],
   imports: [
     CommonModule,
     SharedModule,
