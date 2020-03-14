@@ -14,7 +14,6 @@ import { WorkdayService } from 'src/app/core/services/workday.service';
 export class RegisterComponent implements OnInit {
   RecordType = RecordType;
   lastWorkdayRecord: WorkdayRecord;
-  currenteDatetime: Date = new Date();
   isCustomDatetime = false;
   todaySelected = true;
   saving = false;
@@ -36,7 +35,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.timeRecordForm = this.formBuilder.group({
-      datetime: [null, Validators.required],
+      datetime: [new Date(), Validators.required],
       recordType: [RecordType.IN],
       message: [null]
     });
@@ -44,24 +43,14 @@ export class RegisterComponent implements OnInit {
     this.datetimeControl = this.timeRecordForm.controls.datetime;
     this.recordTypeControl = this.timeRecordForm.controls.recordType;
     this.lastWorkdayRecord = this.workdayService.getLastRecord();
-    this.recordTypeControl.setValue(this.lastWorkdayRecord.recordType === RecordType.IN ? RecordType.OUT : RecordType.IN); 
+    this.recordTypeControl.setValue(this.lastWorkdayRecord.recordType === RecordType.IN ? RecordType.OUT : RecordType.IN);
   }
 
   register() {
     this.saving = true;
-    const message = this.timeRecordForm.get('message').value;
-    const datetime = this.timeRecordForm.get('datetime').value;
-    const recordType = this.lastWorkdayRecord.recordType === RecordType.IN
-      ? RecordType.OUT
-      : RecordType.IN; 
+    const record: WorkdayRecord = this.timeRecordForm.getRawValue();
     this.workdayService
-      .addWorkdayRecord(
-        {
-          datetime,
-          recordType,
-          message
-        } as WorkdayRecord
-      )
+      .addWorkdayRecord(record)
       .pipe(finalize(() => {
         this.saving = false;
       }))
