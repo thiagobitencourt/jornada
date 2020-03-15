@@ -90,6 +90,16 @@ export class RegisterComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  setYesterday() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.datetimeControl.setValue(yesterday);
+  }
+
+  setToday() {
+    this.datetimeControl.setValue(new Date());
+  }
+
   private isTodaySelected() {
     const currentDatetime = new Date(this.datetimeControl.value);
     const todayDatetime = new Date();

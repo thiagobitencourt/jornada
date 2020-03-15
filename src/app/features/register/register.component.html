@@ -9,8 +9,8 @@
         <div>
             <span>{{ datetimeControl.value | date: 'dd/MM/yyyy' }}</span>
             <div>
-                <button mat-flat-button *ngIf="!isCustomDatetime || todaySelected">Ontem</button>
-                <button mat-flat-button *ngIf="isCustomDatetime && !todaySelected">Hoje</button>
+                <button mat-flat-button *ngIf="!isCustomDatetime || todaySelected" (click)="setYesterday()">Ontem</button>
+                <button mat-flat-button *ngIf="isCustomDatetime && !todaySelected" (click)="setToday()">Hoje</button>
                 |
                 <mat-form-field style="width: 0">
                     <input matInput [matDatepicker]="picker" (dateChange)="customDatetimeSelected()" formControlName="datetime">
