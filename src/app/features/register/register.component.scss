@@ -1,9 +1,20 @@
-.dialog-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-gap: 10px;
+.register-form {
+    width: 100%;
+    text-align: center;
 
-    .fas {
-        font-size: 20px;
+    .register-actions {
+        display: grid;
+        grid-gap: 10px;
+    }
+
+    .content-container {
+        width: 60%;
+        margin: auto;
+    }
+
+    .button-toggle {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 }
