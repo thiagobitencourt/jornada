@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.timeRecordForm = this.formBuilder.group({
-      datetime: [new Date(), Validators.required],
+      datetime: [new Date()],
       recordType: [RecordType.IN],
       message: [null]
     });
