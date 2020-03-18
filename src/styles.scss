@@ -11,3 +11,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 textarea {
     resize: none !important;
 }
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    line-height: 30px !important;
+}

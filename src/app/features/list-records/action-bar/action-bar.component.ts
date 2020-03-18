@@ -14,7 +14,7 @@ export class ActionBarComponent implements OnInit {
 
   addNewRecord() {
     this.dialog.open(RegisterComponent, {
-      width: '60vw'
+      width: '40vw'
     }).afterClosed().subscribe(() => {});
   }
 }

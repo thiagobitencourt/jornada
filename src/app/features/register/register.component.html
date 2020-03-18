@@ -57,7 +57,7 @@
         </div>
     </div>
     <div mat-dialog-actions class="register-actions">
-        <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving" (click)="register()">
+        <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving || changingTime" (click)="register()">
             <i class="material-icons md-18"></i>
             <span>Marcar ponto</span>
         </button>
