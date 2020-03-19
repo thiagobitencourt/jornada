@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RecordType } from 'src/app/core/model/record-type.enum';
 import { WorkdayRecord } from 'src/app/core/model/workday-record.model';
@@ -44,6 +44,9 @@ export class RegisterComponent implements OnInit {
     this.recordTypeControl = this.timeRecordForm.controls.recordType;
     this.lastWorkdayRecord = this.workdayService.getLastRecord();
     this.recordTypeControl.setValue(this.lastWorkdayRecord.recordType === RecordType.IN ? RecordType.OUT : RecordType.IN);
+    this.datetimeControl.valueChanges.subscribe(() => {
+      this.checkForTodaySelection();
+    });
   }
 
   register() {
@@ -60,10 +63,8 @@ export class RegisterComponent implements OnInit {
   }
 
   customDatetimeSelected() {
-    clearInterval(this.interval);
-    this.isCustomDatetime = true;
+    this.stopClock();
     this.setTimeToSelectedDatetime();
-    this.todaySelected = this.isTodaySelected();
   }
 
   recordTypeChanged({ value }) {
@@ -74,10 +75,8 @@ export class RegisterComponent implements OnInit {
     this.changingTime = false;
 
     if (time) {
+      this.stopClock();
       const { hour, minute } = time;
-      clearInterval(this.interval);
-      this.isCustomDatetime = true;
-  
       const currentDatetime = new Date(this.datetimeControl.value);
       currentDatetime.setHours(hour);
       currentDatetime.setMinutes(minute);
@@ -91,19 +90,29 @@ export class RegisterComponent implements OnInit {
   }
 
   setYesterday() {
+    this.stopClock();
+    const currentValue = new Date(this.datetimeControl.value);
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
+    yesterday.setHours(currentValue.getHours());
+    yesterday.setMinutes(currentValue.getMinutes());
+    yesterday.setSeconds(0);
     this.datetimeControl.setValue(yesterday);
   }
 
   setToday() {
-    this.datetimeControl.setValue(new Date());
+    const currentValue = new Date(this.datetimeControl.value);
+    const today = new Date();
+    today.setHours(currentValue.getHours());
+    today.setMinutes(currentValue.getMinutes());
+    today.setSeconds(0);
+    this.datetimeControl.setValue(today);
   }
 
-  private isTodaySelected() {
+  private checkForTodaySelection() {
     const currentDatetime = new Date(this.datetimeControl.value);
     const todayDatetime = new Date();
-    return (
+    this.todaySelected = (
       currentDatetime.getDate() === todayDatetime.getDate() &&
       currentDatetime.getMonth() === todayDatetime.getMonth() &&
       currentDatetime.getFullYear() === todayDatetime.getFullYear()
@@ -124,5 +133,10 @@ export class RegisterComponent implements OnInit {
     this.interval = setInterval(() => {
       this.datetimeControl.setValue(new Date());
     }, 1000);
+  }
+
+  private stopClock() {
+    this.isCustomDatetime = true;
+    clearInterval(this.interval);
   }
 }
