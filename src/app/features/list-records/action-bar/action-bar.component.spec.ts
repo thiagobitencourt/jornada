@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActionBarComponent } from './action-bar.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ActionBarComponent', () => {
   let component: ActionBarComponent;
@@ -7,6 +8,7 @@ describe('ActionBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [MatDialogModule],
       declarations: [ActionBarComponent]
     }).compileComponents();
   }));

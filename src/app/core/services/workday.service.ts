@@ -41,10 +41,7 @@ export class WorkdayService {
 
   private findWorkdayRecord(date: Date) {
     const dateString = this.getDateString(date);
-    return this.workdayRecords.find((workday: Workday) => {
-      const currentWorkDayDateString = this.getDateString(workday.date);
-      return currentWorkDayDateString === dateString;
-    });
+    return this.workdayRecords.find((workday: Workday) => this.getDateString(workday.date) === dateString);
   }
 
   private getDateString(date: Date) {
