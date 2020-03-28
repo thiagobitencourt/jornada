@@ -35,6 +35,11 @@ export class WorkdayService {
     return of(null);
   }
 
+  editWorkdayRecord(record: WorkdayRecord): Observable<void> {
+    // @TODO: implement edition method.
+    return of(null);
+  }
+
   listWorkdays(): Observable<Workday[]> {
     return of(this.workdayRecords);
   }

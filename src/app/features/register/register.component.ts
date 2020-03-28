@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   datetimeControl: AbstractControl;
   recordTypeControl: AbstractControl;
   interval: any;
+  editingRecord: WorkdayRecord;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,14 +31,17 @@ export class RegisterComponent implements OnInit {
     public dialogRef: MatDialogRef<RegisterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.initClock();
+    this.editingRecord = data && data.record;
+    if (!this.editingRecord) {
+      this.initClock();
+    }
   }
 
   ngOnInit() {
     this.timeRecordForm = this.formBuilder.group({
-      datetime: [new Date()],
-      recordType: [RecordType.IN],
-      message: [null]
+      datetime: [this.editingRecord ? this.editingRecord.datetime : new Date()],
+      recordType: [this.editingRecord ? this.editingRecord.recordType : RecordType.IN],
+      message: [this.editingRecord ? this.editingRecord.message : null]
     });
 
     this.datetimeControl = this.timeRecordForm.controls.datetime;
@@ -52,10 +56,12 @@ export class RegisterComponent implements OnInit {
   register() {
     this.saving = true;
     const record: WorkdayRecord = this.timeRecordForm.getRawValue();
-    this.workdayService
-      .addWorkdayRecord(record)
-      .pipe(finalize(() => {
-        this.saving = false;
+    const serviceAction = !!this.editingRecord
+      ? this.workdayService.editWorkdayRecord(record)
+      : this.workdayService.addWorkdayRecord(record);
+    
+    serviceAction.pipe(finalize(() => {
+       this.saving = false;
       }))
       .subscribe(() => {
         this.closeDialog();
