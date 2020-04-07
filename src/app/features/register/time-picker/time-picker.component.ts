@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./time-picker.component.scss']
 })
 export class TimePickerComponent implements OnInit {
-  @Input() currenteDatetime: Date;
+  @Input() currentDatetime: Date;
   @Output() updateValue = new EventEmitter();
 
   hours: number[] = [];
@@ -16,19 +16,12 @@ export class TimePickerComponent implements OnInit {
   selectedHour: FormControl;
   selectedMinute: FormControl;
   
-  constructor() {
-    if (this.currenteDatetime) {
-      this.selectedHour = new FormControl(this.currenteDatetime.getHours());
-      this.selectedMinute = new FormControl(this.currenteDatetime.getMinutes());
-    } else {
-      this.selectedHour = new FormControl(new Date().getHours());
-      this.selectedMinute = new FormControl(new Date().getMinutes());
-    }
-  }
+  constructor() {}
   
   ngOnInit(): void {
     this.setHoursList();
     this.setMinutesList();
+    this.setCurrentDatetime(this.currentDatetime);
   }
 
   save() {
@@ -39,6 +32,16 @@ export class TimePickerComponent implements OnInit {
 
   cancel() {
     this.updateValue.emit();
+  }
+
+  private setCurrentDatetime(datetime) {
+    if (datetime) {
+      this.selectedHour = new FormControl(this.currentDatetime.getHours());
+      this.selectedMinute = new FormControl(this.currentDatetime.getMinutes());
+    } else {
+      this.selectedHour = new FormControl(new Date().getHours());
+      this.selectedMinute = new FormControl(new Date().getMinutes());
+    }
   }
 
   private setHoursList() {

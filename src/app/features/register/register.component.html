@@ -37,7 +37,7 @@
                 Alterar
             </button>
             <div *ngIf="changingTime">
-                <app-time-picker [currenteDatetime]="datetimeControl.value" (updateValue)="setTimeValue($event)"></app-time-picker>
+                <app-time-picker [currentDatetime]="datetimeControl.value" (updateValue)="setTimeValue($event)"></app-time-picker>
             </div>
         </div>
 
@@ -58,8 +58,8 @@
     </div>
     <div mat-dialog-actions class="register-actions">
         <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving || changingTime" (click)="register()">
-            <i class="material-icons md-18"></i>
-            <span>Marcar ponto</span>
+            <span *ngIf="!editingRecord">Marcar ponto</span>
+            <span *ngIf="editingRecord">Salvar marcação</span>
         </button>
         <button mat-flat-button (click)="closeDialog()" [disabled]="saving">Cancelar</button>
     </div>
