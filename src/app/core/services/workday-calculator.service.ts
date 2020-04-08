@@ -11,7 +11,8 @@ export class WorkdayCalculatorService {
   fullWorkdayMinutes = 528;
   constructor() {}
 
-  getTotalWorkday({ records }: Workday): number {
+  getTotalWorkday(workday: Workday): number {
+    const { records = [] } = workday || {};
     let totalWorkday = 0;
     
     const ins = records.filter(({ recordType }) => recordType === RecordType.IN).map(({ datetime }) => datetime);
