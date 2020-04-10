@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { WorkdayCalculatorService } from './workday-calculator.service';
 import { Workday } from '../model/workday.model';
 import { RecordType } from '../model/record-type.enum';
+import { OvertimeType } from '../model/overtime-type.enum';
 
 fdescribe('WorkdayCalculatorService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -110,7 +111,34 @@ fdescribe('WorkdayCalculatorService', () => {
     expect(totalWorkDay).toEqual(0);
   });
 
-  it('should calculate the overtime for a worked day');
-  it('should return an Overtime object with the given usedAs value');
-  it('should return a negative value when the worked day is less than the required time');
+  it('should calculate the overtime for a worked day', () => {
+    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
+    const eigthHoursAsMinutes = 480;
+    const tenHoursAsMinutes = 600;
+    const overtimeObject = { usedAs: OvertimeType.OVERTIME, total: 120 }
+    
+    service.fullWorkdayMinutes = eigthHoursAsMinutes;
+    expect(service.getOvertime(tenHoursAsMinutes, OvertimeType.OVERTIME)).toEqual(overtimeObject);
+  });
+
+  it('should return an Overtime object with the given usedAs value', () => {
+    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
+    const eigthHoursAsMinutes = 480;
+
+    let overtimeObject = service.getOvertime(eigthHoursAsMinutes, OvertimeType.OVERTIME);
+    expect(overtimeObject.usedAs).toEqual(OvertimeType.OVERTIME);
+
+    overtimeObject = service.getOvertime(eigthHoursAsMinutes, OvertimeType.COMPTIME);
+    expect(overtimeObject.usedAs).toEqual(OvertimeType.COMPTIME);
+  });
+
+  it('should return a negative value when the worked day is less than the required time', () => {
+    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
+    const eigthHoursAsMinutes = 480;
+    const fiveHoursAsMinutes = 300;
+
+    const overtimeObject = { usedAs: OvertimeType.OVERTIME, total: -180 }
+    service.fullWorkdayMinutes = eigthHoursAsMinutes;
+    expect(service.getOvertime(fiveHoursAsMinutes, OvertimeType.OVERTIME)).toEqual(overtimeObject);
+  });
 });
