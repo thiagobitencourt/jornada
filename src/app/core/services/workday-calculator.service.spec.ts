@@ -6,15 +6,17 @@ import { RecordType } from '../model/record-type.enum';
 import { OvertimeType } from '../model/overtime-type.enum';
 
 fdescribe('WorkdayCalculatorService', () => {
+  let service: WorkdayCalculatorService;
   beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => {
+    service = TestBed.get(WorkdayCalculatorService);
+  });
 
   it('should be created', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     expect(service).toBeTruthy();
   });
 
   it('should not change the original workday object', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     const workday = {
       records: [
         { recordType: RecordType.IN, datetime: new Date('2020-01-01 08:00') },
@@ -28,7 +30,6 @@ fdescribe('WorkdayCalculatorService', () => {
   });
 
   it('should calculate the total worked minutes', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     const workday = {
       records: [
         { recordType: RecordType.IN, datetime: new Date('2020-01-01 08:00') },
@@ -42,8 +43,37 @@ fdescribe('WorkdayCalculatorService', () => {
     expect(service.getTotalWorkday(workday)).toEqual(eigthHoursAsMinutes);
   });
 
+  it('should calculate the total worked minutes with more than 4 records', () => {
+    const workday = {
+      records: [
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 08:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 12:00') },
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 13:30') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 17:30') },
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 20:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 22:00') }
+      ]
+    } as Workday;
+    const tenHoursAsMinutes = 600;
+
+    expect(service.getTotalWorkday(workday)).toEqual(tenHoursAsMinutes);
+  });
+
+  it('should calculate workday across multiple days', () => {
+    const multiWorkday = {
+      records: [
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 08:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-02 08:00') },
+        { recordType: RecordType.IN, datetime: new Date('2020-01-02 20:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-03 02:00') }
+      ]
+    } as Workday;
+
+    const thirtyHoursAsMinutes = 1800;
+    expect(service.getTotalWorkday(multiWorkday)).toEqual(thirtyHoursAsMinutes);
+  });
+
   it('should ignore a record without a match record (IN without OUT)', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     const halfWorkday = {
       records: [
         { recordType: RecordType.IN, datetime: new Date('2020-01-01 08:00') },
@@ -67,21 +97,11 @@ fdescribe('WorkdayCalculatorService', () => {
   });
 
   it('should ignore a record without a match record (OUT without IN)', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
-    // @TODO: Fix the code. This is considered an invalid workday. But it should be calculated correctly
-    // const halfWorkday = {
-    //   records: [
-    //     { recordType: RecordType.IN, datetime: new Date('2020-01-01 13:30') },
-    //     { recordType: RecordType.OUT, datetime: new Date('2020-01-01 12:00') },
-    //     { recordType: RecordType.OUT, datetime: new Date('2020-01-01 17:30') }
-    //   ]
-    // } as Workday;
-
     const halfWorkday = {
       records: [
         { recordType: RecordType.IN, datetime: new Date('2020-01-01 13:30') },
-        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 17:30') },
-        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 19:30') }
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 12:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 17:30') }
       ]
     } as Workday;
     
@@ -99,8 +119,33 @@ fdescribe('WorkdayCalculatorService', () => {
     expect(service.getTotalWorkday(invalidWorkday)).toEqual(notWorkedAtAll);
   });
 
+  it('should not calculate a workday with only IN records', () => {
+    const invalidWorkday = {
+      records: [
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 08:00') },
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 12:00') },
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 13:30') },
+        { recordType: RecordType.IN, datetime: new Date('2020-01-01 17:30') }
+      ]
+    } as Workday;
+
+    expect(service.getTotalWorkday(invalidWorkday)).toEqual(0);
+  });
+
+  it('should not calculate a workday with only OUT records', () => {
+    const invalidWorkday = {
+      records: [
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 08:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 12:00') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 13:30') },
+        { recordType: RecordType.OUT, datetime: new Date('2020-01-01 17:30') }
+      ]
+    } as Workday;
+
+    expect(service.getTotalWorkday(invalidWorkday)).toEqual(0);
+  });
+
   it('should not calculate a workday without records', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     let totalWorkDay = service.getTotalWorkday({} as Workday);
     expect(totalWorkDay).toEqual(0);
 
@@ -112,7 +157,6 @@ fdescribe('WorkdayCalculatorService', () => {
   });
 
   it('should calculate the overtime for a worked day', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     const eigthHoursAsMinutes = 480;
     const tenHoursAsMinutes = 600;
     const overtimeObject = { usedAs: OvertimeType.OVERTIME, total: 120 }
@@ -122,7 +166,6 @@ fdescribe('WorkdayCalculatorService', () => {
   });
 
   it('should return an Overtime object with the given usedAs value', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     const eigthHoursAsMinutes = 480;
 
     let overtimeObject = service.getOvertime(eigthHoursAsMinutes, OvertimeType.OVERTIME);
@@ -133,7 +176,6 @@ fdescribe('WorkdayCalculatorService', () => {
   });
 
   it('should return a negative value when the worked day is less than the required time', () => {
-    const service: WorkdayCalculatorService = TestBed.get(WorkdayCalculatorService);
     const eigthHoursAsMinutes = 480;
     const fiveHoursAsMinutes = 300;
 
