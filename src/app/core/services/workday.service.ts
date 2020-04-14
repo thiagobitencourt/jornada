@@ -21,6 +21,7 @@ export class WorkdayService {
   }
 
   addWorkdayRecord(record: WorkdayRecord): Observable<void> {
+    // @TODO: refactor and extract if else logic to a function "getWorkdayRecord" that returs the existent or a new one.
     const workday = this.findWorkdayRecord(record.datetime);
     if (workday) {
       workday.records.push(record);
