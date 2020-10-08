@@ -38,10 +38,11 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    const initial = this.getInitialValues();
     this.timeRecordForm = this.formBuilder.group({
-      datetime: [this.editingRecord ? this.editingRecord.datetime : new Date()],
-      recordType: [this.editingRecord ? this.editingRecord.recordType : RecordType.IN],
-      message: [this.editingRecord ? this.editingRecord.message : null]
+      datetime: [initial.datetime],
+      recordType: [initial.recordType],
+      message: [initial.message]
     });
 
     this.datetimeControl = this.timeRecordForm.controls.datetime;
@@ -117,6 +118,11 @@ export class RegisterComponent implements OnInit {
     today.setMinutes(currentValue.getMinutes());
     today.setSeconds(0);
     this.datetimeControl.setValue(today);
+  }
+
+  private getInitialValues() {
+    const defaultValues = { datetime: new Date(), recordType: RecordType.IN, message: null };
+    return this.editingRecord || defaultValues;
   }
 
   private checkForTodaySelection() {
