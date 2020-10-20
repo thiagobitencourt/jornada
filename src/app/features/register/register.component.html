@@ -1,66 +1,39 @@
-<form class="register-form" [formGroup]="timeRecordForm">
-    <div mat-dialog-content class="register-form-container">
-        <div class="content-container">
-            <mat-button-toggle-group class="button-toggle" [value]="recordTypeControl.value" (change)="recordTypeChanged($event)">
-                <mat-button-toggle [value]="RecordType.IN">
-                    <span class="iconed-label">
-                        <i class="fas fa-sign-in-alt"></i>
-                        <span>Entrada</span>
-                    </span>
-                </mat-button-toggle>
-                <mat-button-toggle [value]="RecordType.OUT" class="iconed-label">
-                    <span class="iconed-label">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Saída</span>
-                    </span>
-                </mat-button-toggle>
-            </mat-button-toggle-group>
-        </div>
-        <div class="content-container">
-            <div class="date-display">{{ datetimeControl.value | date: 'dd/MM/yyyy' }}</div>
-            <div>
-                <button mat-flat-button *ngIf="!isCustomDatetime || todaySelected" (click)="setYesterday()">Ontem</button>
-                <button mat-flat-button *ngIf="isCustomDatetime && !todaySelected" (click)="setToday()">Hoje</button>
-                |
-                <mat-form-field style="width: 0">
-                    <input matInput [matDatepicker]="picker" (dateChange)="customDatetimeSelected()" formControlName="datetime">
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <button mat-flat-button (click)="picker.open()">
-                    Alterar
-                </button>
-            </div>
-        </div>
-        <div class="content-container">
-            <div  class="time-display" *ngIf="!changingTime">{{ datetimeControl.value | date: 'HH:mm:ss' }}</div>
-            <button *ngIf="!changingTime" mat-flat-button (click)="changingTime = true">
-                Alterar
-            </button>
-            <div *ngIf="changingTime">
-                <app-time-picker [currentDatetime]="datetimeControl.value" (updateValue)="setTimeValue($event)"></app-time-picker>
-            </div>
-        </div>
-
-        <div class="content-container">
-            <mat-form-field  style="width: 100%">
-                <mat-label>Observação</mat-label>
-                <textarea matInput placeholder="Adicione um comentário a esta marcação..." formControlName="message"></textarea>
+<form [formGroup]="timeRecordForm">
+    <div mat-dialog-content>
+        <div class="datetime-picker">
+            <mat-form-field appearance="outline">
+                <mat-label>Data</mat-label>
+                <input matInput [matDatepicker]="picker" [max]="today" formControlName="datetime">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Hora</mat-label>
+                <mat-select formControlName="hour">
+                    <mat-option *ngFor="let hour of hours" [value]="hour">
+                        {{ hour }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Minuto</mat-label>
+                <mat-select formControlName="minute">
+                    <mat-option *ngFor="let minute of minutes" [value]="minute">
+                      {{ minute }}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
 
-        <div class="content-container">
-            <span class="last-record" *ngIf="lastWorkdayRecord && lastWorkdayRecord.datetime">
-                Última marcação
-                    {{ lastWorkdayRecord.datetime | date: 'dd/MM/yyyy' }} às
-                    {{ lastWorkdayRecord.datetime | date: 'HH:mm' }}
-            </span>
-        </div>
+        <mat-form-field appearance="outline" class="textarea-input">
+            <mat-label>Observação</mat-label>
+            <textarea matInput placeholder="Adicione um comentário a esta marcação..." formControlName="message"></textarea>
+        </mat-form-field>
     </div>
-    <div mat-dialog-actions class="register-actions">
-        <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving || changingTime" (click)="register()">
-            <span *ngIf="!editingRecord">Marcar ponto</span>
-            <span *ngIf="editingRecord">Salvar marcação</span>
-        </button>
+    <div mat-dialog-actions>
+        <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving" (click)="saveRecord()">Salvar</button>
         <button mat-flat-button (click)="closeDialog()" [disabled]="saving">Cancelar</button>
     </div>
 </form>

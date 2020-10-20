@@ -1,33 +1,11 @@
-.register-form {
-    width: 100%;
-    text-align: center;
-
-    .register-actions,
-    .register-form-container {
+:host {
+    .datetime-picker {
         display: grid;
-        grid-gap: 10px;
+        grid-template-columns: 1fr auto auto;
+        gap: 15px;
     }
 
-    .content-container {
+    .textarea-input {
         width: 100%;
-    }
-
-    .date-display {
-        font-size: 50px;
-        padding-top: 10px;
-    }
-
-    .time-display {
-        font-size: 30px
-    }
-
-    .button-toggle {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .last-record {
-        font-size: 14px;
     }
 }

@@ -4,6 +4,7 @@ import { Overtime } from '../model/overtime.model';
 import { OvertimeType } from '../model/overtime-type.enum';
 import { RecordType } from '../model/record-type.enum';
 import { WorkdayRecord } from '../model/workday-record.model';
+import { compareAsc } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class WorkdayCalculatorService {
 
   getTotalWorkday(workday: Workday): number {
     const records = [ ...(workday && workday.records || []) ];
-    records.sort((recordA, recordB) => recordA.datetime.getTime() - recordB.datetime.getTime());
+    records.sort((recordA, recordB) => compareAsc(new Date(recordA.datetime), new Date(recordB.datetime)));
 
     let lastInRecord: WorkdayRecord;
     const totalWorkdayMilliseconds = records.reduce((total, workdayRecord) => {
@@ -31,7 +32,7 @@ export class WorkdayCalculatorService {
     return (totalWorkdayMilliseconds / 1000) / 60;
   }
 
-  getOvertime(totalWorkday: number, usedAs: OvertimeType): Overtime {
+  getOvertime(totalWorkday: number, usedAs: OvertimeType = OvertimeType.OVERTIME): Overtime {
     const overtime = {
       usedAs,
       total: totalWorkday - this.fullWorkdayMinutes

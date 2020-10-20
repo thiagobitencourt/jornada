@@ -1,4 +1,4 @@
 <section>
-    <app-action-bar style="margin-bottom: 15px"></app-action-bar>
-    <app-workday-list [workdays]="workdays | async"></app-workday-list>
+    <app-action-bar (recordChanged)="loadWorkdays()" style="margin-bottom: 15px"></app-action-bar>
+    <app-workday-list [workdays]="workdays"></app-workday-list>
 </section>
