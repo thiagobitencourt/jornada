@@ -1,12 +1,7 @@
 <ul class="records-list">
     <li *ngFor="let record of records" class="workday-record">
-        <div *ngIf="record.recordType === RecordType.IN" class="iconed-label">
-            <span><i class="fas fa-sign-in-alt"></i></span>
-            <span>Entrada às {{ record.datetime | date: 'HH:mm'}}</span>
-        </div>
-        <div *ngIf="record.recordType === RecordType.OUT" class="iconed-label">
-            <span><i class="fas fa-sign-out-alt"></i></span>
-            <span>Saída às {{ record.datetime | date: 'HH:mm'}}</span>
+        <div>
+            <span>{{ record.datetime | date: 'HH:mm' }}</span>
         </div>
         <div class="iconed-label">
             <span><i class="fas fa-comment-alt"></i></span>
@@ -16,7 +11,7 @@
             <button mat-icon-button matTooltip="Editar" (click)="editWorkdayRecord(record)">
                 <i class="fas fa-pen"></i>
             </button>
-            <button mat-icon-button matTooltip="Remover">
+            <button mat-icon-button matTooltip="Remover" (click)="removeWorkdayRecord(record)">
                 <i class="fas fa-trash"></i>
             </button>
         </div>

@@ -1,5 +1,5 @@
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let workday of workdays">
+    <mat-expansion-panel *ngFor="let workday of workdays; let index = index">
         <mat-expansion-panel-header>
             <mat-panel-title class="workday-summary">
                 <div>{{ workday.date | date: 'dd/MM/yyyy' }}</div>
@@ -8,6 +8,10 @@
                 <div>{{ workday.overtime?.usedAs }}</div>
             </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-workday-record-list [records]="workday.records"></app-workday-record-list>
+        <app-workday-record-list
+            [records]="workday.records"
+            (editRecord)="editRecord($event)"
+            (removeRecord)="removeRecord($event, index)">
+        </app-workday-record-list>
     </mat-expansion-panel>
 </mat-accordion>
