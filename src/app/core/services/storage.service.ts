@@ -7,7 +7,6 @@ import { Workday } from '../model/workday.model';
 import { UtilService } from './util.service';
 import { WorkdayCalculatorService } from './workday-calculator.service';
 
-const WORKDAY_KEY = 'WORKDAYS';
 const WORKDAY_RECORD_KEY = 'WORKDAY_RECORDS';
 
 @Injectable({
@@ -26,15 +25,9 @@ export class StorageService {
 // DELETE /workday-record/:id
 
   getWorkdays({ start, end }: WorkdayFilter): Observable<Workday[]> {
-    const workdays: Workday[] = JSON.parse(localStorage.getItem(WORKDAY_KEY) || '[]');
     const workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
-
     const workdayList: Workday[] = eachDayOfInterval({ start, end })
-      .map(date => this.getWorkdayByDate(workdays, date))
-      .map(workday => {
-        workday.records = this.getWorkdayRecords(workdayRecords, new Date(workday.date));
-        return workday;
-      })
+      .map(date => this.getWorkdayByDate(workdayRecords, date))
       .reverse()
 
     return of(workdayList);
@@ -46,56 +39,30 @@ export class StorageService {
     workdayRecords = this.removeRecordFromList(workdayRecords, workdayRecord);
     workdayRecords.push(workdayRecord);
     localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
-    this.updateWorkday(workdayRecord.datetime);
     return of(workdayRecord);
   }
 
-  removeWorkdayRecord(workdayRecord: WorkdayRecord): Observable<WorkdayRecord> {
+  removeWorkdayRecord(workday: Workday, workdayRecord: WorkdayRecord): Observable<Workday> {
     let workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
     workdayRecords = this.removeRecordFromList(workdayRecords, workdayRecord);
+    workday.records = this.removeRecordFromList(workday.records, workdayRecord);
     localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
-    this.updateWorkday(workdayRecord.datetime);
-    return of(workdayRecord);
-  }
-
-  private updateWorkday(date: Date): Workday {
-    const workdays: Workday[] = JSON.parse(localStorage.getItem(WORKDAY_KEY) || '[]');
-    const workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
-
-    const workdayIndex = workdays.findIndex(workday => isSameDay(date, new Date(workday.date)));
-    const records = this.getWorkdayRecords(workdayRecords, date);
-    const workday = this.getEmptyWorkday(date);
-
-    workday.records = records;
-    workday.totalWorkday = this.workdayCalculator.getTotalWorkday(workday);
-    workday.overtime = this.workdayCalculator.getOvertime(workday.totalWorkday);
-
-    delete workday.records;
-
-    if (workdayIndex > -1) {
-      workdays[workdayIndex] = workday;
-    } else {
-      workdays.push(workday);
-    }
-
-    localStorage.setItem(WORKDAY_KEY, JSON.stringify(workdays));
-    return workday;
+    return of(this.setTotalsToWorkday(workday));
   }
 
   private removeRecordFromList(workdayRecordList: WorkdayRecord[], workdayRecord: WorkdayRecord): WorkdayRecord[] {
     return workdayRecordList.filter(record => record.id !== workdayRecord.id);
   }
 
-  private getWorkdayByDate(workdays: Workday[] = [], date: Date): Workday {
-    const workday = workdays.find(workday => isSameDay(date, new Date(workday.date)));
-    return workday || this.getEmptyWorkday(date);
+  private getWorkdayByDate(workdayRecords: WorkdayRecord[] = [], date: Date): Workday {
+    const records = workdayRecords.filter(workdayRecord => isSameDay(date, new Date(workdayRecord.datetime)));
+    const workday = { date, records } as Workday;
+    return this.setTotalsToWorkday(workday);
   }
 
-  private getEmptyWorkday(date: Date): Workday {
-    return { date, records: [] };
-  }
-
-  private getWorkdayRecords(workdayRecords: WorkdayRecord[] = [], date: Date): WorkdayRecord[] {
-    return workdayRecords.filter(workdayRecord => isSameDay(date, new Date(workdayRecord.datetime)));
+  private setTotalsToWorkday(workday: Workday): Workday {
+    workday.totalWorkday = this.workdayCalculator.getTotalWorkday(workday);
+    workday.overtime = this.workdayCalculator.getOvertime(workday.totalWorkday);
+    return workday;
   }
 }
