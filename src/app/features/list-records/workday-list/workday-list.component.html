@@ -10,7 +10,7 @@
         </mat-expansion-panel-header>
         <app-workday-record-list
             [records]="workday.records"
-            (editRecord)="editRecord($event)"
+            (editRecord)="editRecord($event, index)"
             (removeRecord)="removeRecord($event, index)">
         </app-workday-record-list>
     </mat-expansion-panel>

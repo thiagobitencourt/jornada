@@ -22,4 +22,8 @@ export class WorkdayService {
   removerWorkdayRecord(workday: Workday, workdayRecord: WorkdayRecord): Observable<Workday> {
     return this.storage.removeWorkdayRecord(workday, workdayRecord);
   }
+
+  getUpdatedWorkday(workday: Workday): Observable<Workday> {
+    return this.storage.getUpdatedWorkday(workday);
+  }
 }

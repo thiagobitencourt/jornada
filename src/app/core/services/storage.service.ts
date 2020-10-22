@@ -47,7 +47,12 @@ export class StorageService {
     workdayRecords = this.removeRecordFromList(workdayRecords, workdayRecord);
     workday.records = this.removeRecordFromList(workday.records, workdayRecord);
     localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
-    return of(this.setTotalsToWorkday(workday));
+    return of(this.workdayCalculator.setTotalsToWorkday(workday));
+  }
+
+  getUpdatedWorkday(workday: Workday): Observable<Workday> {
+    const workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
+    return of(this.getWorkdayByDate(workdayRecords, workday.date));
   }
 
   private removeRecordFromList(workdayRecordList: WorkdayRecord[], workdayRecord: WorkdayRecord): WorkdayRecord[] {
@@ -57,12 +62,6 @@ export class StorageService {
   private getWorkdayByDate(workdayRecords: WorkdayRecord[] = [], date: Date): Workday {
     const records = workdayRecords.filter(workdayRecord => isSameDay(date, new Date(workdayRecord.datetime)));
     const workday = { date, records } as Workday;
-    return this.setTotalsToWorkday(workday);
-  }
-
-  private setTotalsToWorkday(workday: Workday): Workday {
-    workday.totalWorkday = this.workdayCalculator.getTotalWorkday(workday);
-    workday.overtime = this.workdayCalculator.getOvertime(workday.totalWorkday);
-    return workday;
+    return this.workdayCalculator.setTotalsToWorkday(workday);
   }
 }

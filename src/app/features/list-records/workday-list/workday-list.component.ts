@@ -29,12 +29,15 @@ export class WorkdayListComponent implements OnInit {
     return moment.utc().hours(h).minutes(m).format("HH:mm");
   }
 
-  editRecord(record: WorkdayRecord) {
+  editRecord(record: WorkdayRecord, workdayIndex: number) {
     this.dialog.open(RegisterComponent, {
       width: '40vw',
       data: { record }
     }).afterClosed().subscribe(() => {
-      console.log('Edited!');
+      this.workdayService.getUpdatedWorkday(this.workdays[workdayIndex])
+        .subscribe((updatedWorkday: Workday) => {
+          this.workdays[workdayIndex] = { ...this.workdays[workdayIndex], ...updatedWorkday };
+        });
     });
   }
 

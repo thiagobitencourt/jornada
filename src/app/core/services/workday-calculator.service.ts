@@ -13,6 +13,12 @@ export class WorkdayCalculatorService {
   fullWorkdayMinutes = 528;
   constructor() {}
 
+  setTotalsToWorkday(workday: Workday): Workday {
+    workday.totalWorkday = this.getTotalWorkday(workday);
+    workday.overtime = this.getOvertime(workday.totalWorkday);
+    return workday;
+  }
+
   getTotalWorkday(workday: Workday): number {
     const records = [ ...(workday && workday.records || []) ];
     records.sort((recordA, recordB) => compareAsc(new Date(recordA.datetime), new Date(recordB.datetime)));
