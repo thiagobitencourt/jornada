@@ -1,17 +1,20 @@
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let workday of workdays; let index = index">
-        <mat-expansion-panel-header>
-            <mat-panel-title class="workday-summary">
-                <div>{{ workday.date | date: 'dd/MM/yyyy' }}</div>
-                <div>{{ getTimeFromMins(workday.totalWorkday) }}</div>
+  <mat-expansion-panel *ngFor="let workday of workdays; let index = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="workday-summary">
+        <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
+        <div>{{ getTimeFromMins(workday.totalWorkday) }}</div>
+        <!--
                 <div>{{ getTimeFromMins(workday.overtime?.total) }}</div>
                 <div>{{ workday.overtime?.usedAs }}</div>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-workday-record-list
-            [records]="workday.records"
-            (editRecord)="editRecord($event, index)"
-            (removeRecord)="removeRecord($event, index)">
-        </app-workday-record-list>
-    </mat-expansion-panel>
+                -->
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-workday-record-list
+      [records]="workday.records"
+      (editRecord)="editRecord($event, index)"
+      (removeRecord)="removeRecord($event, index)"
+    >
+    </app-workday-record-list>
+  </mat-expansion-panel>
 </mat-accordion>
