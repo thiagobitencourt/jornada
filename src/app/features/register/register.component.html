@@ -1,39 +1,63 @@
 <form [formGroup]="timeRecordForm">
-    <div mat-dialog-content>
-        <div class="datetime-picker">
-            <mat-form-field appearance="outline">
-                <mat-label>Data</mat-label>
-                <input matInput [matDatepicker]="picker" [max]="today" formControlName="datetime">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            
-            <mat-form-field appearance="outline">
-                <mat-label>Hora</mat-label>
-                <mat-select formControlName="hour">
-                    <mat-option *ngFor="let hour of hours" [value]="hour">
-                        {{ hour }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <mat-form-field appearance="outline">
-                <mat-label>Minuto</mat-label>
-                <mat-select formControlName="minute">
-                    <mat-option *ngFor="let minute of minutes" [value]="minute">
-                      {{ minute }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+  <div mat-dialog-content>
+    <div class="datetime-picker">
+      <mat-form-field appearance="outline">
+        <mat-label>Data</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [max]="today"
+          formControlName="datetime"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" class="textarea-input">
-            <mat-label>Observação</mat-label>
-            <textarea matInput placeholder="Adicione um comentário a esta marcação..." formControlName="message"></textarea>
-        </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Hora</mat-label>
+        <mat-select formControlName="hour">
+          <mat-option *ngFor="let hour of hours" [value]="hour">
+            {{ hour }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Minuto</mat-label>
+        <mat-select formControlName="minute">
+          <mat-option *ngFor="let minute of minutes" [value]="minute">
+            {{ minute }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div mat-dialog-actions>
-        <button mat-flat-button color="primary" [disabled]="timeRecordForm.invalid || saving" (click)="saveRecord()">Salvar</button>
-        <button mat-flat-button (click)="closeDialog()" [disabled]="saving">Cancelar</button>
-    </div>
+
+    <mat-form-field appearance="outline" class="textarea-input">
+      <mat-label>Observação</mat-label>
+      <textarea
+        matInput
+        placeholder="Adicione um comentário a esta marcação..."
+        formControlName="message"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      type="submit"
+      mat-flat-button
+      color="primary"
+      [disabled]="timeRecordForm.invalid || saving"
+      (click)="saveRecord()"
+    >
+      Salvar
+    </button>
+    <button
+      type="button"
+      mat-flat-button
+      (click)="closeDialog()"
+      [disabled]="saving"
+    >
+      Cancelar
+    </button>
+  </div>
 </form>

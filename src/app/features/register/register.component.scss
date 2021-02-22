@@ -1,11 +1,11 @@
 :host {
-    .datetime-picker {
-        display: grid;
-        grid-template-columns: 1fr auto auto;
-        gap: 15px;
-    }
+  .datetime-picker {
+    display: grid;
+    grid-template-columns: 1fr 70px 70px;
+    gap: 15px;
+  }
 
-    .textarea-input {
-        width: 100%;
-    }
+  .textarea-input {
+    width: 100%;
+  }
 }
