@@ -3,17 +3,17 @@ import { Workday } from "../model/workday.model";
 import { Overtime } from "../model/overtime.model";
 import { OvertimeType } from "../model/overtime-type.enum";
 import { compareAsc, differenceInMinutes } from "date-fns";
+import { WorkdayConfigService } from "./workday-config.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class WorkdayCalculatorService {
-  fullWorkdayMinutes = 528;
-  constructor() {}
+  constructor(private workdayConfig: WorkdayConfigService) {}
 
   setTotalsToWorkday(workday: Workday): Workday {
     workday.totalWorkday = this.getTotalWorkday(workday);
-    workday.overtime = this.getOvertime(workday.totalWorkday);
+    workday.overtime = this.getOvertime(workday);
     return workday;
   }
 
@@ -40,14 +40,23 @@ export class WorkdayCalculatorService {
     return totalWorkday;
   }
 
-  getOvertime(
-    totalWorkday: number,
-    usedAs: OvertimeType = OvertimeType.OVERTIME
-  ): Overtime {
-    const overtime = {
-      usedAs,
-      total: totalWorkday - this.fullWorkdayMinutes,
-    } as Overtime;
-    return overtime;
+  getOvertime({ totalWorkday, date }: Workday): Overtime {
+    if (this.shouldCalculateValues({ totalWorkday, date } as Workday)) {
+      const total = totalWorkday - this.workdayConfig.getFullWorkdayMinutes();
+      const usedAs = this.getOvertimeUsedAs(date);
+      return { total, usedAs } as Overtime;
+    }
+
+    return { total: 0, usedAs: null } as Overtime;
+  }
+
+  private shouldCalculateValues({ totalWorkday, date }: Workday): boolean {
+    return totalWorkday > 0 || this.workdayConfig.shouldWorkAt(date);
+  }
+
+  private getOvertimeUsedAs(date: Date): OvertimeType {
+    return this.workdayConfig.hasActiveCompensationContract(date)
+      ? OvertimeType.COMPTIME
+      : OvertimeType.OVERTIME;
   }
 }
