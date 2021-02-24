@@ -13,6 +13,8 @@ import { WorkdayService } from "src/app/core/services/workday.service";
 export class WorkdayListComponent implements OnInit {
   @Input() workdays: Workday[] = [];
 
+  trackByIndex = (index) => index;
+
   constructor(
     public dialog: MatDialog,
     private workdayService: WorkdayService

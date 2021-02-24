@@ -1,67 +1,86 @@
-import { Injectable } from '@angular/core';
-import { eachDayOfInterval, isSameDay, isSameMonth } from 'date-fns';
-import { Observable, of } from 'rxjs';
-import { WorkdayFilter } from '../model/workday-filter';
-import { WorkdayRecord } from '../model/workday-record.model';
-import { Workday } from '../model/workday.model';
-import { UtilService } from './util.service';
-import { WorkdayCalculatorService } from './workday-calculator.service';
+import { Injectable } from "@angular/core";
+import { eachDayOfInterval, isSameDay, isSameMonth } from "date-fns";
+import { Observable, of } from "rxjs";
+import { WorkdayFilter } from "../model/workday-filter";
+import { WorkdayRecord } from "../model/workday-record.model";
+import { Workday } from "../model/workday.model";
+import { UtilService } from "./util.service";
+import { WorkdayCalculatorService } from "./workday-calculator.service";
 
-const WORKDAY_RECORD_KEY = 'WORKDAY_RECORDS';
+const WORKDAY_RECORD_KEY = "WORKDAY_RECORDS";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class StorageService {
-  constructor(private utilService: UtilService, private workdayCalculator: WorkdayCalculatorService) {}
-
-// GET /workday?begin="2020-10-08"&end="2020-10-08"
-// GET /workday/:id
-// DELETE /workday/:id
-// GET /workday-record?begin="2020-10-08"&end="2020-10-08"
-// GET /workday-record/:id
-// POST /workday-record
-// PUT /workday-record/:id
-// DELETE /workday-record/:id
+  constructor(
+    private utilService: UtilService,
+    private workdayCalculator: WorkdayCalculatorService
+  ) {}
 
   getWorkdays({ start, end }: WorkdayFilter): Observable<Workday[]> {
-    const workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
     const workdayList: Workday[] = eachDayOfInterval({ start, end })
-      .map(date => this.getWorkdayByDate(workdayRecords, date))
-      .reverse()
+      .map((date) => this.getWorkdayByDate(this.getWorkdayRecords(), date))
+      .reverse();
 
     return of(workdayList);
   }
 
   saveWorkdayRecord(workdayRecord: WorkdayRecord): Observable<WorkdayRecord> {
-    let workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
     workdayRecord.id = workdayRecord.id || this.utilService.generateId();
-    workdayRecords = this.removeRecordFromList(workdayRecords, workdayRecord);
+    const workdayRecords = this.removeRecordFromList(
+      this.getWorkdayRecords(),
+      workdayRecord
+    );
+
     workdayRecords.push(workdayRecord);
-    localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
+    this.setWordayRecords(workdayRecords);
     return of(workdayRecord);
   }
 
-  removeWorkdayRecord(workday: Workday, workdayRecord: WorkdayRecord): Observable<Workday> {
-    let workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
+  removeWorkdayRecord(
+    workday: Workday,
+    workdayRecord: WorkdayRecord
+  ): Observable<Workday> {
+    let workdayRecords = this.getWorkdayRecords();
     workdayRecords = this.removeRecordFromList(workdayRecords, workdayRecord);
     workday.records = this.removeRecordFromList(workday.records, workdayRecord);
-    localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
+    this.setWordayRecords(workdayRecords);
     return of(this.workdayCalculator.setTotalsToWorkday(workday));
   }
 
   getUpdatedWorkday(workday: Workday): Observable<Workday> {
-    const workdayRecords: WorkdayRecord[] = JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || '[]');
-    return of(this.getWorkdayByDate(workdayRecords, workday.date));
+    return of(this.getWorkdayByDate(this.getWorkdayRecords(), workday.date));
   }
 
-  private removeRecordFromList(workdayRecordList: WorkdayRecord[], workdayRecord: WorkdayRecord): WorkdayRecord[] {
-    return workdayRecordList.filter(record => record.id !== workdayRecord.id);
+  private removeRecordFromList(
+    workdayRecordList: WorkdayRecord[],
+    workdayRecord: WorkdayRecord
+  ): WorkdayRecord[] {
+    return workdayRecordList.filter((record) => record.id !== workdayRecord.id);
   }
 
-  private getWorkdayByDate(workdayRecords: WorkdayRecord[] = [], date: Date): Workday {
-    const records = workdayRecords.filter(workdayRecord => isSameDay(date, new Date(workdayRecord.datetime)));
+  private getWorkdayByDate(
+    workdayRecords: WorkdayRecord[] = [],
+    date: Date
+  ): Workday {
+    const records = workdayRecords.filter((workdayRecord) =>
+      isSameDay(date, new Date(workdayRecord.datetime))
+    );
+    records.sort(
+      (rA, rB) =>
+        new Date(rA.datetime).getTime() - new Date(rB.datetime).getTime()
+    );
+
     const workday = { date, records } as Workday;
     return this.workdayCalculator.setTotalsToWorkday(workday);
+  }
+
+  private getWorkdayRecords(): WorkdayRecord[] {
+    return JSON.parse(localStorage.getItem(WORKDAY_RECORD_KEY) || "[]");
+  }
+
+  private setWordayRecords(workdayRecords: WorkdayRecord[]) {
+    localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
   }
 }

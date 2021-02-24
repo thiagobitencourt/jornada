@@ -1,5 +1,7 @@
 <mat-accordion>
-  <mat-expansion-panel *ngFor="let workday of workdays; let index = index">
+  <mat-expansion-panel
+    *ngFor="let workday of workdays; let index = index; trackBy: trackByIndex"
+  >
     <mat-expansion-panel-header>
       <mat-panel-title class="workday-summary">
         <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
