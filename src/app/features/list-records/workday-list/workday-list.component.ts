@@ -21,13 +21,6 @@ export class WorkdayListComponent implements OnInit {
   ) {}
   ngOnInit(): void {}
 
-  getTimeFromMins(mins) {
-    const curatedMins = Math.abs(mins);
-    const hours = ((curatedMins / 60) | 0).toString();
-    const minutes = (curatedMins % 60 | 0).toString();
-    return hours.padStart(2, "0") + ":" + minutes.padStart(2, "0");
-  }
-
   editRecord(record: WorkdayRecord, workdayIndex: number) {
     this.dialog
       .open(RegisterComponent, {

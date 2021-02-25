@@ -5,8 +5,8 @@
     <mat-expansion-panel-header>
       <mat-panel-title class="workday-summary">
         <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
-        <div>{{ getTimeFromMins(workday.totalWorkday) }}</div>
-        <div>{{ getTimeFromMins(workday.overtime?.total) }}</div>
+        <div>{{ workday.totalWorkday | minutesToHours }}</div>
+        <div>{{ workday.overtime?.total | minutesToHours }}</div>
         <div>{{ workday.overtime?.usedAs }}</div>
       </mat-panel-title>
     </mat-expansion-panel-header>
