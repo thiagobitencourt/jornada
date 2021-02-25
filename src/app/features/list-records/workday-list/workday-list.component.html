@@ -6,8 +6,9 @@
       <mat-panel-title class="workday-summary">
         <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
         <div>{{ workday.totalWorkday | minutesToHours }}</div>
-        <div>{{ workday.overtime?.total | minutesToHours }}</div>
-        <div>{{ workday.overtime?.usedAs }}</div>
+        <app-over-time-display
+          [overtime]="workday.overtime"
+        ></app-over-time-display>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <app-workday-record-list

@@ -4,9 +4,16 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AngularMaterialImports } from "./angular-material-imports";
 import { HeaderComponent } from "./components/header/header.component";
 import { MinutesToHoursPipe } from "./pipes/minutes-to-hours.pipe";
+import { OverTimeDisplayComponent } from "./components/over-time-display/over-time-display.component";
+import { OvertimeTypeLabelPipe } from "./pipes/overtime-type-label.pipe";
 
 @NgModule({
-  declarations: [HeaderComponent, MinutesToHoursPipe],
+  declarations: [
+    HeaderComponent,
+    MinutesToHoursPipe,
+    OverTimeDisplayComponent,
+    OvertimeTypeLabelPipe,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,7 +26,9 @@ import { MinutesToHoursPipe } from "./pipes/minutes-to-hours.pipe";
     ReactiveFormsModule,
     AngularMaterialImports,
     HeaderComponent,
+    OverTimeDisplayComponent,
     MinutesToHoursPipe,
+    OvertimeTypeLabelPipe,
   ],
 })
 export class SharedModule {}
