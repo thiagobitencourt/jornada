@@ -1,5 +1,9 @@
 .workday-summary {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.weekend {
+  background-color: #f5f5f5;
 }

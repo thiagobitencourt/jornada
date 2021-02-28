@@ -13,6 +13,7 @@ export class WorkdayCalculatorService {
 
   setTotalsToWorkday(workday: Workday): Workday {
     workday.totalWorkday = this.getTotalWorkday(workday);
+    workday.worked = this.workedDay(workday);
     workday.overtime = this.getOvertime(workday);
     return workday;
   }
@@ -40,8 +41,8 @@ export class WorkdayCalculatorService {
     return totalWorkday;
   }
 
-  getOvertime({ totalWorkday, date }: Workday): Overtime {
-    if (this.shouldCalculateValues({ totalWorkday, date } as Workday)) {
+  getOvertime({ worked, totalWorkday, date }: Workday): Overtime {
+    if (worked) {
       const total = totalWorkday - this.workdayConfig.getFullWorkdayMinutes();
       const usedAs = this.getOvertimeUsedAs(date);
       return { total, usedAs } as Overtime;
@@ -50,7 +51,7 @@ export class WorkdayCalculatorService {
     return { total: 0, usedAs: null } as Overtime;
   }
 
-  private shouldCalculateValues({ totalWorkday, date }: Workday): boolean {
+  private workedDay({ totalWorkday, date }: Workday): boolean {
     return totalWorkday > 0 || this.workdayConfig.shouldWorkAt(date);
   }
 

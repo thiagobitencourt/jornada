@@ -1,11 +1,16 @@
 <mat-accordion>
   <mat-expansion-panel
     *ngFor="let workday of workdays; let index = index; trackBy: trackByIndex"
+    [class.weekend]="workday.date | isWeekend"
   >
     <mat-expansion-panel-header>
       <mat-panel-title class="workday-summary">
         <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
-        <div>{{ workday.totalWorkday | minutesToHours }}</div>
+        <div>
+          <span *ngIf="workday.worked">
+            {{ workday.totalWorkday | minutesToHours }}
+          </span>
+        </div>
         <app-over-time-display
           [overtime]="workday.overtime"
         ></app-over-time-display>
