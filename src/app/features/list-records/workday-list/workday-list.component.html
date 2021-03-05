@@ -5,7 +5,10 @@
   >
     <mat-expansion-panel-header>
       <mat-panel-title class="workday-summary">
-        <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
+        <div>
+          <div>{{ workday.date | date: "dd/MM/yyyy" }}</div>
+          <div class="date-label">{{ workday.date | date: "EEEE" }}</div>
+        </div>
         <div>
           <span *ngIf="workday.worked">
             {{ workday.totalWorkday | minutesToHours }}

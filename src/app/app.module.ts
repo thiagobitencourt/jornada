@@ -1,17 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { LOCALE_ID, NgModule } from "@angular/core";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FeaturesModule } from './features/features.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import localePt from '@angular/common/locales/pt';
-import localePtExtra from '@angular/common/locales/extra/pt';
-import { registerLocaleData } from '@angular/common';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
-registerLocaleData(localePt, 'pt', localePtExtra);
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { FeaturesModule } from "./features/features.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MAT_DATE_LOCALE } from "@angular/material/core";
+import localePt from "@angular/common/locales/pt";
+import localePtExtra from "@angular/common/locales/extra/pt";
+import { registerLocaleData } from "@angular/common";
+import { CoreModule } from "./core/core.module";
+import { SharedModule } from "./shared/shared.module";
+registerLocaleData(localePt, "pt", localePtExtra);
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,14 +21,18 @@ registerLocaleData(localePt, 'pt', localePtExtra);
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    FeaturesModule
+    FeaturesModule,
   ],
   providers: [
     {
       provide: MAT_DATE_LOCALE,
-      useValue: 'pt-BR'
-    }
+      useValue: "pt-BR",
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: "pt-BR",
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
