@@ -1,4 +1,10 @@
 <section>
-    <app-action-bar (recordChanged)="loadWorkdays()" style="margin-bottom: 15px"></app-action-bar>
-    <app-workday-list [workdays]="workdays"></app-workday-list>
+  <app-action-bar
+    (recordChanged)="loadWorkdays()"
+    style="margin-bottom: 15px"
+  ></app-action-bar>
+  <app-workday-list
+    (recordChanged)="loadWorkdays()"
+    [workdays]="workdays"
+  ></app-workday-list>
 </section>

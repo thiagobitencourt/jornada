@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Workday } from "src/app/core/model/workday.model";
 import { WorkdayRecord } from "src/app/core/model/workday-record.model";
 import { MatDialog } from "@angular/material/dialog";
@@ -12,6 +12,7 @@ import { WorkdayService } from "src/app/core/services/workday.service";
 })
 export class WorkdayListComponent implements OnInit {
   @Input() workdays: Workday[] = [];
+  @Output() recordChanged = new EventEmitter<Workday>();
 
   trackByIndex = (index) => index;
 
@@ -36,6 +37,7 @@ export class WorkdayListComponent implements OnInit {
               ...this.workdays[workdayIndex],
               ...updatedWorkday,
             };
+            this.emitRecordChanged(this.workdays[workdayIndex]);
           });
       });
   }
@@ -45,6 +47,11 @@ export class WorkdayListComponent implements OnInit {
       .removerWorkdayRecord(this.workdays[workdayIndex], record)
       .subscribe((newWorkday: Workday) => {
         this.workdays[workdayIndex] = newWorkday;
+        this.emitRecordChanged(newWorkday);
       });
+  }
+
+  private emitRecordChanged(workday: Workday) {
+    this.recordChanged.emit(workday);
   }
 }
