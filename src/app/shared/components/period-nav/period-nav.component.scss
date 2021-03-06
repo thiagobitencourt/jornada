@@ -1,0 +1,38 @@
+:host {
+  $border-color: #ccc;
+
+  .nav {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    border: 1px solid $border-color;
+    border-radius: 4px;
+
+    > div {
+      padding: 10px;
+      min-width: 25px;
+      text-align: center;
+    }
+
+    > div.month-display {
+      min-width: 80px;
+    }
+
+    > div:first-child {
+      border-right: 1px solid $border-color;
+      cursor: pointer;
+    }
+
+    > div:last-child {
+      border-left: 1px solid $border-color;
+      cursor: pointer;
+    }
+
+    > div:first-child,
+    > div:last-child {
+      &.disabled {
+        color: #ccc;
+        cursor: default;
+      }
+    }
+  }
+}

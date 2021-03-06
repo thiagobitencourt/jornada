@@ -8,6 +8,7 @@ import { OverTimeDisplayComponent } from "./components/over-time-display/over-ti
 import { OvertimeTypeLabelPipe } from "./pipes/overtime-type-label.pipe";
 import { IsWeekendPipe } from "./pipes/is-weekend.pipe";
 import { TagComponent } from "./components/tag/tag.component";
+import { PeriodNavComponent } from "./components/period-nav/period-nav.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { TagComponent } from "./components/tag/tag.component";
     OvertimeTypeLabelPipe,
     IsWeekendPipe,
     TagComponent,
+    PeriodNavComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,7 @@ import { TagComponent } from "./components/tag/tag.component";
     HeaderComponent,
     OverTimeDisplayComponent,
     TagComponent,
+    PeriodNavComponent,
     MinutesToHoursPipe,
     OvertimeTypeLabelPipe,
     IsWeekendPipe,

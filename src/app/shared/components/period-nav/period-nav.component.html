@@ -1,0 +1,16 @@
+<div class="nav">
+  <div (click)="previousMonth()" matRipple>
+    <i class="fas fa-chevron-left"></i>
+  </div>
+  <div class="month-display">
+    {{ selectedMonth | date: "MMMM yyyy" | titlecase }}
+  </div>
+  <div
+    (click)="nextMonth()"
+    matRipple
+    [matRippleDisabled]="!isNextAllowed"
+    [class.disabled]="!isNextAllowed"
+  >
+    <i class="fas fa-chevron-right"></i>
+  </div>
+</div>
