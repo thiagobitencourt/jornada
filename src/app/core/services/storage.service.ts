@@ -18,7 +18,8 @@ export class StorageService {
     private workdayCalculator: WorkdayCalculatorService
   ) {}
 
-  getWorkdays({ start, end }: WorkdayFilter): Observable<Workday[]> {
+  getWorkdays({ period }: WorkdayFilter): Observable<Workday[]> {
+    const { start, end } = period;
     const workdayList: Workday[] = eachDayOfInterval({ start, end })
       .map((date) => this.getWorkdayByDate(this.getWorkdayRecords(), date))
       .reverse();

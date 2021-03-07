@@ -1,6 +1,7 @@
 <section>
   <app-action-bar
     (recordChanged)="loadWorkdays()"
+    (filterChanged)="loadWorkdays($event)"
     style="margin-bottom: 15px"
   ></app-action-bar>
   <app-workday-list

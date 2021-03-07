@@ -1,4 +1,8 @@
-export interface WorkdayFilter {
+export interface FilterPeriod {
   start: Date;
-  end: Date
+  end: Date;
+}
+
+export interface WorkdayFilter {
+  period: FilterPeriod;
 }

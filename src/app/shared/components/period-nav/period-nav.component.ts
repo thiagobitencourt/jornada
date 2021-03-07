@@ -1,5 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { addMonths, isSameMonth, subMonths } from "date-fns";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  addMonths,
+  endOfMonth,
+  isSameMonth,
+  startOfMonth,
+  subMonths,
+} from "date-fns";
+import { FilterPeriod } from "src/app/core/model/workday-filter";
 
 @Component({
   selector: "app-period-nav",
@@ -7,11 +14,14 @@ import { addMonths, isSameMonth, subMonths } from "date-fns";
   styleUrls: ["./period-nav.component.scss"],
 })
 export class PeriodNavComponent implements OnInit {
+  @Output() periodChanged = new EventEmitter<FilterPeriod>();
   selectedMonth = new Date();
   isNextAllowed = false;
 
   constructor() {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => this.selectedMonthChanged(), 500);
+  }
 
   previousMonth() {
     this.selectedMonth = subMonths(this.selectedMonth, 1);
@@ -26,7 +36,11 @@ export class PeriodNavComponent implements OnInit {
   }
 
   private selectedMonthChanged() {
-    this.isNextAllowed = !isSameMonth(new Date(), this.selectedMonth);
-    // emit change event
+    const today = new Date();
+    const isCurrentMonth = isSameMonth(today, this.selectedMonth);
+    this.isNextAllowed = !isCurrentMonth;
+    const start = startOfMonth(this.selectedMonth);
+    const end = isCurrentMonth ? today : endOfMonth(this.selectedMonth);
+    this.periodChanged.emit({ start, end });
   }
 }
