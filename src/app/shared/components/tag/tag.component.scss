@@ -1,9 +1,22 @@
 :host {
   .tag {
     font-size: 10px;
-    color: #737373;
     padding: 4px;
-    background-color: #ccc;
     border-radius: 4px;
+
+    &.default {
+      background-color: #ccc;
+      color: #737373;
+    }
+
+    &.success {
+      background-color: #63c14b;
+      color: #2c5821;
+    }
+
+    &.danger {
+      background-color: #f97164;
+      color: #5f2b26;
+    }
   }
 }

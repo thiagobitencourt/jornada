@@ -9,7 +9,7 @@
   <span>
     {{ overtime?.total | minutesToHours }}
   </span>
-  <app-tag>
+  <app-tag [color]="overtime?.total | overtimeColor">
     {{ overtime?.usedAs | overtimeTypeLabel: isOvertime }}
   </app-tag>
 </div>
