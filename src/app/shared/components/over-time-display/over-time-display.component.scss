@@ -1,0 +1,20 @@
+@import 'src/assets/styles/_colors';
+
+:host {
+  .default {
+    color: $default;
+  }
+
+  .success {
+    color: $success
+  }
+
+  .danger {
+    color: $danger;
+  }
+
+  .overtime-value {
+    color: $default-dark;
+    font-weight: 500;
+  }
+}

@@ -1,12 +1,12 @@
 <div *ngIf="overtimeNotZero">
-  <span>
+  <span class="{{ overtime?.total | overtimeColor }}">
     <i
       class="fas"
       [class.fa-long-arrow-alt-up]="isOvertime"
       [class.fa-long-arrow-alt-down]="!isOvertime"
     ></i>
   </span>
-  <span>
+  <span class="overtime-value">
     {{ overtime?.total | minutesToHours }}
   </span>
   <app-tag [color]="overtime?.total | overtimeColor">

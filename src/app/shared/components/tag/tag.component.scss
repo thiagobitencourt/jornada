@@ -1,3 +1,5 @@
+@import 'src/assets/styles/_colors';
+
 :host {
   .tag {
     font-size: 10px;
@@ -5,18 +7,18 @@
     border-radius: 4px;
 
     &.default {
-      background-color: #ccc;
-      color: #737373;
+      background-color: $default;
+      color: $default-dark;
     }
 
     &.success {
-      background-color: #63c14b;
-      color: #2c5821;
+      background-color: $success;
+      color: $success-dark;
     }
 
     &.danger {
-      background-color: #f97164;
-      color: #5f2b26;
+      background-color: $danger;
+      color: $danger-dark;
     }
   }
 }
