@@ -7,6 +7,7 @@ import { ListRecordsComponent } from './list-records/list-records.component';
 import { ActionBarComponent } from './list-records/action-bar/action-bar.component';
 import { WorkdayListComponent } from './list-records/workday-list/workday-list.component';
 import { WorkdayRecordListComponent } from './list-records/workday-record-list/workday-record-list.component';
+import { OvertimeStatsComponent } from './list-records/overtime-stats/overtime-stats.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { WorkdayRecordListComponent } from './list-records/workday-record-list/w
     RegisterComponent,
     ActionBarComponent,
     WorkdayListComponent,
-    WorkdayRecordListComponent
+    WorkdayRecordListComponent,
+    OvertimeStatsComponent
   ],
   imports: [
     CommonModule,

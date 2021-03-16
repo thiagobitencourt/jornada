@@ -1,6 +1,6 @@
-:host {
-  $border-color: #ccc;
+@import 'src/assets/styles/_colors';
 
+:host {
   .nav {
     display: grid;
     grid-template-columns: repeat(3, auto);

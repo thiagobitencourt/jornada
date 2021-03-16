@@ -10,6 +10,7 @@ import { IsWeekendPipe } from "./pipes/is-weekend.pipe";
 import { TagComponent } from "./components/tag/tag.component";
 import { PeriodNavComponent } from "./components/period-nav/period-nav.component";
 import { OvertimeColorPipe } from "./pipes/overtime-color.pipe";
+import { StatsComponent } from "./components/stats/stats.component";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { OvertimeColorPipe } from "./pipes/overtime-color.pipe";
     OvertimeColorPipe,
     TagComponent,
     PeriodNavComponent,
+    StatsComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ import { OvertimeColorPipe } from "./pipes/overtime-color.pipe";
     OvertimeColorPipe,
     TagComponent,
     PeriodNavComponent,
+    StatsComponent,
     MinutesToHoursPipe,
     OvertimeTypeLabelPipe,
     IsWeekendPipe,

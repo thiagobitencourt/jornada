@@ -4,8 +4,11 @@
     (filterChanged)="loadWorkdays($event)"
     style="margin-bottom: 15px"
   ></app-action-bar>
-  <app-workday-list
-    (recordChanged)="loadWorkdays()"
-    [workdays]="workdays"
-  ></app-workday-list>
+  <div class="list-stats">
+    <app-workday-list
+      (recordChanged)="loadWorkdays()"
+      [workdays]="workdays"
+    ></app-workday-list>
+    <app-overtime-stats></app-overtime-stats>
+  </div>
 </section>
