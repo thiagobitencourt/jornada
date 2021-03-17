@@ -10,6 +10,6 @@ export class OvertimeColorPipe implements PipeTransform {
       return ColorPattern.DEFAULT;
     }
 
-    return overtime > 0 ? ColorPattern.SUCCESS : ColorPattern.DANGER;
+    return overtime >= 0 ? ColorPattern.SUCCESS : ColorPattern.DANGER;
   }
 }

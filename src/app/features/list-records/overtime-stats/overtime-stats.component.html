@@ -1,1 +1,20 @@
-<app-stats></app-stats>
+<app-stats
+  [value]="statsValue?.overtime?.value | minutesToHours"
+  [label]="statsValue?.overtime?.label"
+  [color]="statsValue?.overtime?.color"
+></app-stats>
+<app-stats
+  [value]="statsValue?.undertime?.value | minutesToHours: true"
+  [label]="statsValue?.undertime?.label"
+  [color]="statsValue?.undertime?.color"
+></app-stats>
+<app-stats
+  [value]="statsValue?.comptime?.value | minutesToHours: true"
+  [label]="statsValue?.comptime?.label"
+  [color]="statsValue?.comptime?.color"
+></app-stats>
+<app-stats
+  [value]="statsValue?.comptimeBalance?.value | minutesToHours: true"
+  [label]="statsValue?.comptimeBalance?.label"
+  [color]="statsValue?.comptimeBalance?.color"
+></app-stats>

@@ -4,9 +4,10 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: "minutesToHours",
 })
 export class MinutesToHoursPipe implements PipeTransform {
-  transform(mins: number): String {
+  transform(mins: number, keepSignal = false): String {
     let { hours, minutes }: any = this.toHourObject(mins);
-    return this.format(hours) + ":" + this.format(minutes);
+    const hoursFormat = this.format(hours) + ":" + this.format(minutes);
+    return (keepSignal && mins < 0 ? "- " : "") + hoursFormat;
   }
 
   toHourObject(mins: number): { hours: number; minutes: number } {
