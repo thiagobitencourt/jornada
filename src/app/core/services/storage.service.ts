@@ -43,7 +43,7 @@ export class StorageService {
               }
 
               if (this.isUndertime(workday.overtime)) {
-                statsValue.overtime.value += workday.overtime.total;
+                statsValue.undertime.value += workday.overtime.total;
               }
 
               if (this.isComptime(workday.overtime)) {
