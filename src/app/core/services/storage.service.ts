@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 import { eachDayOfInterval, isSameDay } from "date-fns";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { ColorPattern } from "../model/color-pattern.enum";
+import { OvertimeApiValues } from "../model/overtime-api-values";
 import { OvertimeType } from "../model/overtime-type.enum";
-import { OvertimeValues } from "../model/overtime-values";
 import { Overtime } from "../model/overtime.model";
 import { WorkdayFilter } from "../model/workday-filter";
 import { WorkdayRecord } from "../model/workday-record.model";
@@ -32,50 +31,26 @@ export class StorageService {
     return of(workdayList);
   }
 
-  getStatValues(filter: WorkdayFilter): Observable<OvertimeValues> {
+  getStatValues(filter: WorkdayFilter): Observable<OvertimeApiValues> {
     return this.getWorkdays(filter).pipe(
       map((workdays: Workday[]) => {
         return workdays.reduce(
           (statsValue, workday) => {
             if (workday.overtime) {
-              if (this.isOvertime(workday.overtime)) {
-                statsValue.overtime.value += workday.overtime.total;
-              }
-
-              if (this.isUndertime(workday.overtime)) {
-                statsValue.undertime.value += workday.overtime.total;
-              }
-
-              if (this.isComptime(workday.overtime)) {
-                statsValue.comptime.value += workday.overtime.total;
-                statsValue.comptimeBalance.value += workday.overtime.total;
-
-                statsValue.comptime.color =
-                  statsValue.comptime.value < 0
-                    ? ColorPattern.DANGER
-                    : ColorPattern.SUCCESS;
-                statsValue.comptimeBalance.color =
-                  statsValue.comptimeBalance.value < 0
-                    ? ColorPattern.DANGER
-                    : ColorPattern.SUCCESS;
-              }
+              statsValue.overtime += this.getOvertimeValue(workday.overtime);
+              statsValue.undertime += this.getUndertimeValue(workday.overtime);
+              const compotimeValue = this.getComptimeValue(workday.overtime);
+              statsValue.comptime += compotimeValue;
+              statsValue.comptimeBalance += compotimeValue;
             }
             return statsValue;
           },
           {
-            overtime: {
-              value: 0,
-              label: "Horas extras",
-              color: ColorPattern.SUCCESS,
-            },
-            undertime: {
-              value: 0,
-              label: "Horas faltas",
-              color: ColorPattern.DANGER,
-            },
-            comptime: { value: 0, label: "Banco de horas" },
-            comptimeBalance: { value: 0, label: "Saldo em banco de horas" },
-          } as OvertimeValues
+            overtime: 0,
+            undertime: 0,
+            comptime: 0,
+            comptimeBalance: 0,
+          }
         );
       })
     );
@@ -139,15 +114,19 @@ export class StorageService {
     localStorage.setItem(WORKDAY_RECORD_KEY, JSON.stringify(workdayRecords));
   }
 
-  private isOvertime(overtime: Overtime) {
-    return overtime.total > 0 && overtime.usedAs === OvertimeType.OVERTIME;
+  private getOvertimeValue(overtime: Overtime): number {
+    return overtime.total > 0 && overtime.usedAs === OvertimeType.OVERTIME
+      ? overtime.total
+      : 0;
   }
 
-  private isUndertime(overtime: Overtime) {
-    return overtime.total < 0 && overtime.usedAs === OvertimeType.OVERTIME;
+  private getUndertimeValue(overtime: Overtime): number {
+    return overtime.total < 0 && overtime.usedAs === OvertimeType.OVERTIME
+      ? overtime.total
+      : 0;
   }
 
-  private isComptime(overtime: Overtime) {
-    return overtime.usedAs === OvertimeType.COMPTIME;
+  private getComptimeValue(overtime: Overtime): number {
+    return overtime.usedAs === OvertimeType.COMPTIME ? overtime.total : 0;
   }
 }
