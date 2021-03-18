@@ -1,7 +1,6 @@
 @import "src/assets/styles/_colors";
 
 .stats {
-  border-top: 2px solid;
   border-bottom: 3px solid;
   border-radius: 4px;
   text-align: right;
@@ -22,12 +21,11 @@
   .value {
     color: $default-dark;
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 500;
   }
 
   .label {
     color: $default-dark;
-    font-weight: 500;
     font-size: 14px;
   }
 }
