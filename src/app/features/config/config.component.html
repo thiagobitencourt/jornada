@@ -1,0 +1,19 @@
+<h3 class="title">Configurações</h3>
+
+<form [formGroup]="configForm">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Carga horária diária</mat-label>
+      <input formControlName="totalDailyTime" matInput required />
+    </mat-form-field>
+  </div>
+
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="save()"
+    [disabled]="configForm.invalid"
+  >
+    Salvar
+  </button>
+</form>
