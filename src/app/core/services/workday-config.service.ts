@@ -31,10 +31,10 @@ export class WorkdayConfigService {
   }
 
   shouldWorkAt(date: Date): boolean {
-    return this.workingDays.includes(getDay(date)) && !this.isHolyday(date);
+    return this.workingDays.includes(getDay(date)) && !this.isHoliday(date);
   }
 
-  private isHolyday(date: Date): boolean {
+  private isHoliday(date: Date): boolean {
     // TODO: implement
     return false;
   }
