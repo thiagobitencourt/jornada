@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { eachDayOfInterval, isSameDay } from "date-fns";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
+import { Config } from "../model/config";
 import { OvertimeApiValues } from "../model/overtime-api-values";
 import { OvertimeType } from "../model/overtime-type.enum";
 import { Overtime } from "../model/overtime.model";
@@ -12,6 +13,7 @@ import { UtilService } from "./util.service";
 import { WorkdayCalculatorService } from "./workday-calculator.service";
 
 const WORKDAY_RECORD_KEY = "WORKDAY_RECORDS";
+const CONFIG_KEY = "CONFIG_JORNADA";
 
 @Injectable({
   providedIn: "root",
@@ -21,6 +23,15 @@ export class StorageService {
     private utilService: UtilService,
     private workdayCalculator: WorkdayCalculatorService
   ) {}
+
+  saveConfig(config: Config): Observable<Config> {
+    localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+    return of(config);
+  }
+
+  getConfig(): Observable<Config> {
+    return of(JSON.parse(localStorage.getItem(CONFIG_KEY) || "{}"));
+  }
 
   getWorkdays({ period }: WorkdayFilter): Observable<Workday[]> {
     const { start, end } = period;
