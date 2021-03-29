@@ -5,13 +5,16 @@
   <app-period-nav (periodChanged)="periodChanged($event)"></app-period-nav>
 </div>
 <div>
+  <button
+    class="action-icon"
+    title="Configurações"
+    mat-button
+    color="primary"
+    routerLink="/config"
+  >
+    <i class="fas fa-cogs"></i>
+  </button>
   <!--
-    <button mat-button color="primary">
-        <span class="iconed-label">
-            <i class="fas fa-cogs"></i>
-            <span>Configurações</span>
-        </span>
-    </button>
     <button mat-button color="primary">
         <span class="iconed-label">
             <i class="fas fa-cloud-upload-alt"></i>

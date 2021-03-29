@@ -8,6 +8,18 @@
     </mat-form-field>
   </div>
 
+  <div class="working-days-list">
+    <h4>Dias de trabalho</h4>
+    <span
+      formArrayName="workingDays"
+      *ngFor="let day of daysList.controls; let i = index"
+    >
+      <mat-checkbox [formControlName]="i">
+        {{ workingDayList[i].label }}
+      </mat-checkbox>
+    </span>
+  </div>
+
   <button
     mat-flat-button
     color="primary"

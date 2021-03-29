@@ -2,4 +2,8 @@
   display: grid;
   grid-template-columns: auto auto 1fr;
   gap: 15px;
+
+  .action-icon {
+    float: right;
+  }
 }

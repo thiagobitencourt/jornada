@@ -2,4 +2,10 @@
   .title {
     font-weight: 500;
   }
+
+  .working-days-list {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 20px;
+  }
 }
