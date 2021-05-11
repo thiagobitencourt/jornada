@@ -1,0 +1,22 @@
+<div *ngIf="comment" class="comment">
+  <span><i class="fas fa-comment-alt"></i></span>
+  <span>{{ comment }}</span>
+  <span>
+    <button
+      mat-icon-button
+      matTooltip="Editar observação"
+      (click)="updateCommentEvent()"
+    >
+      <i class="fas fa-pen"></i>
+    </button>
+  </span>
+</div>
+
+<button
+  *ngIf="!comment"
+  mat-button
+  color="primary"
+  (click)="updateCommentEvent()"
+>
+  Adicionar observação
+</button>

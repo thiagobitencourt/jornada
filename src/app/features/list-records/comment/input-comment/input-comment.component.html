@@ -1,0 +1,33 @@
+<div mat-dialog-content>
+  <mat-form-field
+    style="width: 100%"
+    appearance="outline"
+    class="textarea-input"
+  >
+    <mat-label>Observação</mat-label>
+    <textarea
+      matInput
+      placeholder="Adicione uma observação..."
+      [formControl]="commentControl"
+    ></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button
+    type="button"
+    mat-flat-button
+    color="primary"
+    (click)="saveComment()"
+    [disabled]="saving"
+  >
+    Salvar
+  </button>
+  <button
+    type="button"
+    mat-flat-button
+    (click)="closeDialog()"
+    [disabled]="saving"
+  >
+    Cancelar
+  </button>
+</div>

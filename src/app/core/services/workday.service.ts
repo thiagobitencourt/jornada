@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { forkJoin, Observable } from "rxjs";
+import { forkJoin, Observable, of } from "rxjs";
 import { Workday } from "../model/workday.model";
 import { WorkdayRecord } from "../model/workday-record.model";
 import { StorageService } from "./storage.service";
@@ -32,6 +32,11 @@ export class WorkdayService {
 
   saveWorkdayRecord(workdayRecord: WorkdayRecord): Observable<WorkdayRecord> {
     return this.storage.saveWorkdayRecord(workdayRecord);
+  }
+
+  saveWorkdayComment(workday: Workday, comment: string): Observable<Workday> {
+    workday.comment = comment;
+    return of(workday);
   }
 
   removerWorkdayRecord(

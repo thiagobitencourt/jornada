@@ -4,8 +4,9 @@ import { WorkdayRecord } from "./workday-record.model";
 export interface Workday {
   id?: number;
   date: Date;
-  totalWorkday?: number;
-  overtime?: Overtime;
   records: WorkdayRecord[];
   worked: boolean;
+  totalWorkday?: number;
+  overtime?: Overtime;
+  comment?: string;
 }

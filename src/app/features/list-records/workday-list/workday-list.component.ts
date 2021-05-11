@@ -4,6 +4,7 @@ import { WorkdayRecord } from "src/app/core/model/workday-record.model";
 import { MatDialog } from "@angular/material/dialog";
 import { RegisterComponent } from "../../register/register.component";
 import { WorkdayService } from "src/app/core/services/workday.service";
+import { InputCommentComponent } from "../comment/input-comment/input-comment.component";
 
 @Component({
   selector: "app-workday-list",
@@ -48,6 +49,18 @@ export class WorkdayListComponent implements OnInit {
       .subscribe((newWorkday: Workday) => {
         this.workdays[workdayIndex] = newWorkday;
         this.emitRecordChanged(newWorkday);
+      });
+  }
+
+  updateComment(workday: Workday) {
+    this.dialog
+      .open(InputCommentComponent, {
+        width: "40vw",
+        data: { workday, comment: workday.comment },
+      })
+      .afterClosed()
+      .subscribe((newComment) => {
+        console.log("comentário editado: " + newComment);
       });
   }
 

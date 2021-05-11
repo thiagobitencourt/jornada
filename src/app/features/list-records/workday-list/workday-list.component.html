@@ -17,6 +17,9 @@
         <app-over-time-display
           [overtime]="workday.overtime"
         ></app-over-time-display>
+        <!--
+          <span><i *ngIf="workday.comment" class="fas fa-comment-alt"></i></span>
+        -->
       </mat-panel-title>
     </mat-expansion-panel-header>
     <app-workday-record-list
@@ -25,5 +28,10 @@
       (removeRecord)="removeRecord($event, index)"
     >
     </app-workday-record-list>
+    <app-comment
+      (updateComment)="updateComment(workday)"
+      [comment]="workday.comment"
+    ></app-comment>
+    <div></div>
   </mat-expansion-panel>
 </mat-accordion>
