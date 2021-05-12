@@ -1,19 +1,28 @@
 <ul class="records-list">
-    <li *ngFor="let record of records" class="workday-record">
-        <div>
-            <span>{{ record.datetime | date: 'HH:mm' }}</span>
-        </div>
-        <div class="iconed-label">
-            <span><i class="fas fa-comment-alt"></i></span>
-            <span>{{ record.message }}</span>
-        </div>
-        <div>
-            <button mat-icon-button matTooltip="Editar" (click)="editWorkdayRecord(record)">
-                <i class="fas fa-pen"></i>
-            </button>
-            <button mat-icon-button matTooltip="Remover" (click)="removeWorkdayRecord(record)">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
-    </li>
+  <li *ngFor="let record of records; let even = even" class="workday-record">
+    <div class="iconed-label">
+      <span>
+        <i *ngIf="even" matTooltip="Entrada" class="fas fa-sign-in-alt"></i>
+        <i *ngIf="!even" matTooltip="Saída" class="fas fa-sign-out-alt"></i>
+      </span>
+      <span>{{ record.datetime | date: "HH:mm" }}</span>
+    </div>
+
+    <div>
+      <button
+        mat-icon-button
+        matTooltip="Editar"
+        (click)="editWorkdayRecord(record)"
+      >
+        <i class="fas fa-pen"></i>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="Remover"
+        (click)="removeWorkdayRecord(record)"
+      >
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>
+  </li>
 </ul>

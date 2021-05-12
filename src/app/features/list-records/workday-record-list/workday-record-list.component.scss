@@ -1,9 +1,9 @@
 .records-list {
-    padding-left: 0;
+  padding-left: 0;
 
-    .workday-record {
-        display: grid;
-        grid-template-columns: 1fr 2fr auto;
-        align-items: center;
-    }
+  .workday-record {
+    display: grid;
+    grid-template-columns: 0.5fr auto;
+    align-items: center;
+  }
 }
