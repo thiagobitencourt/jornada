@@ -48,7 +48,6 @@ export class RegisterComponent implements OnInit {
       datetime: [initialRecord.datetime, Validators.required],
       hour: [getHours(initialRecord.datetime), Validators.required],
       minute: [getMinutes(initialRecord.datetime), Validators.required],
-      message: [initialRecord.message],
     });
   }
 
